@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
 import AppShell from './layout/AppShell';
-import ScheduleConfigForm from '../components/ScheduleConfigForm';
-import ScheduleGrid from '../components/ScheduleGrid';
-import Legend from '../components/Legend';
-import ValidationSummary from '../components/ValidationSummary';
+import Header from './layout/Header';
+import Body from './layout/Body';
+import Footer from './layout/Footer';
 
 /**
  * Main application component.
- * Manages form state and schedule generation placeholder.
+ * Manages application state and layout structure.
+ * Organizes content into Header, Body, and Footer sections.
  */
 export default function App() {
   const [config, setConfig] = useState({
@@ -35,45 +35,14 @@ export default function App() {
 
   return (
     <AppShell>
-      <div className="app-container">
-        <header className="app-header">
-          <h1>Supervisor Schedule</h1>
-          <p className="subtitle">Schedule generation and validation tool</p>
-        </header>
-
-        <div className="app-content">
-          <aside className="config-panel">
-            <ScheduleConfigForm
-              config={config}
-              onConfigChange={handleConfigChange}
-              onGenerateSchedule={handleGenerateSchedule}
-            />
-          </aside>
-
-          <main className="main-area">
-            <section className="schedule-section">
-              {scheduleResult ? (
-                <>
-                  <ScheduleGrid scheduleResult={scheduleResult} />
-                  <Legend />
-                </>
-              ) : (
-                <div className="empty-state">
-                  <p>No schedule generated yet.</p>
-                  <p className="empty-state-hint">
-                    Configure parameters and click &quot;Generate Schedule&quot;
-                    to begin.
-                  </p>
-                </div>
-              )}
-            </section>
-
-            <section className="validation-section">
-              <ValidationSummary scheduleResult={scheduleResult} />
-            </section>
-          </main>
-        </div>
-      </div>
+      <Header />
+      <Body
+        config={config}
+        onConfigChange={handleConfigChange}
+        scheduleResult={scheduleResult}
+        onGenerateSchedule={handleGenerateSchedule}
+      />
+      <Footer />
     </AppShell>
   );
 }

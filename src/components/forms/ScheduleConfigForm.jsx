@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 
 /**
@@ -9,6 +10,8 @@ export default function ScheduleConfigForm({
   onConfigChange,
   onGenerateSchedule,
 }) {
+  const { t } = useTranslation();
+
   const handleInputChange = (field, value) => {
     const numValue = parseInt(value, 10);
     if (!Number.isNaN(numValue)) {
@@ -19,10 +22,10 @@ export default function ScheduleConfigForm({
   return (
     <form className="config-form" onSubmit={(e) => e.preventDefault()}>
       <fieldset>
-        <legend>Schedule Configuration</legend>
+        <legend>{t('config.title')}</legend>
 
         <div className="form-group">
-          <label htmlFor="workDays">Work Days (N)</label>
+          <label htmlFor="workDays">{t('config.workDays')}</label>
           <input
             id="workDays"
             type="number"
@@ -32,11 +35,11 @@ export default function ScheduleConfigForm({
             onChange={(e) => handleInputChange('workDays', e.target.value)}
             className="form-input"
           />
-          <small>Number of days per work cycle</small>
+          <small>{t('config.workDaysHint')}</small>
         </div>
 
         <div className="form-group">
-          <label htmlFor="offDays">Off Days (M)</label>
+          <label htmlFor="offDays">{t('config.offDays')}</label>
           <input
             id="offDays"
             type="number"
@@ -46,11 +49,11 @@ export default function ScheduleConfigForm({
             onChange={(e) => handleInputChange('offDays', e.target.value)}
             className="form-input"
           />
-          <small>Number of off days per cycle</small>
+          <small>{t('config.offDaysHint')}</small>
         </div>
 
         <div className="form-group">
-          <label htmlFor="inductionDays">Induction Days</label>
+          <label htmlFor="inductionDays">{t('config.inductionDays')}</label>
           <input
             id="inductionDays"
             type="number"
@@ -60,12 +63,12 @@ export default function ScheduleConfigForm({
             onChange={(e) => handleInputChange('inductionDays', e.target.value)}
             className="form-input"
           />
-          <small>Days required for induction (1–5)</small>
+          <small>{t('config.inductionDaysHint')}</small>
         </div>
 
         <div className="form-group">
           <label htmlFor="drillingDaysRequired">
-            Total Drilling Days Required
+            {t('config.drillingDaysRequired')}
           </label>
           <input
             id="drillingDaysRequired"
@@ -78,7 +81,7 @@ export default function ScheduleConfigForm({
             }
             className="form-input"
           />
-          <small>Total drilling operations needed</small>
+          <small>{t('config.drillingDaysHint')}</small>
         </div>
 
         <button
@@ -86,7 +89,7 @@ export default function ScheduleConfigForm({
           onClick={onGenerateSchedule}
           className={clsx('btn', 'btn-primary')}
         >
-          Generate Schedule
+          {t('config.generateButton')}
         </button>
       </fieldset>
     </form>
