@@ -26,17 +26,23 @@
   "validation": {
     "title": "Validation Summary",
     "placeholder": "Validation results will appear here after generating a schedule.",
-    "success": "✓ Schedule is valid",
+    "success": "Schedule is valid",
     "issuesFound": "Issues Found:"
   },
   "theme": {
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System"
+    "light": "light",
+    "dark": "dark",
+    "system": "system"
   },
   "language": "Language",
   "controls": {
     "language": "Language",
-    "theme": "Theme"
+    "theme": "Theme",
+    "selectLanguage": "Select language",
+    "toggleTheme": "Switch to {{mode}} mode",
+    "languages": {
+      "english": "English",
+      "spanish": "Español"
+    }
   }
 }

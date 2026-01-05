@@ -26,17 +26,23 @@
   "validation": {
     "title": "Resumen de Validación",
     "placeholder": "Los resultados de validación aparecerán aquí después de generar un cronograma.",
-    "success": "✓ El cronograma es válido",
+    "success": "El cronograma es válido",
     "issuesFound": "Problemas Encontrados:"
   },
   "theme": {
-    "light": "Claro",
-    "dark": "Oscuro",
-    "system": "Sistema"
+    "light": "claro",
+    "dark": "oscuro",
+    "system": "sistema"
   },
   "language": "Idioma",
   "controls": {
     "language": "Idioma",
-    "theme": "Tema"
+    "theme": "Tema",
+    "selectLanguage": "Seleccionar idioma",
+    "toggleTheme": "Cambiar a modo {{mode}}",
+    "languages": {
+      "english": "English",
+      "spanish": "Español"
+    }
   }
 }

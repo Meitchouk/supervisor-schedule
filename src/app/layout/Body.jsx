@@ -1,51 +1,47 @@
-import { useTranslation } from 'react-i18next';
 import { ScheduleConfigForm } from '../../components/forms';
-import { ScheduleGrid, Legend } from '../../components/schedule';
+import { ScheduleGrid, Legend, EmptySchedule } from '../../components/schedule';
 import { ValidationSummary } from '../../components/validation';
+import { useSchedule } from '../../context/ScheduleContext';
+import ContentContainer from './ContentContainer';
+import TwoColumnLayout from './TwoColumnLayout';
+import StackLayout from './StackLayout';
 
 /**
  * Body component.
- * Main content area with schedule configuration and display.
+ * Main content area composed with predefined layouts.
+ * Components adapt to the layout structure.
  */
-export default function Body({
-  config,
-  onConfigChange,
-  scheduleResult,
-  onGenerateSchedule,
-}) {
-  const { t } = useTranslation();
+export default function Body() {
+  const { config, scheduleResult, handleConfigChange, handleGenerateSchedule } =
+    useSchedule();
 
   return (
-    <main className="app-body">
-      <div className="app-content">
-        <aside className="config-panel">
-          <ScheduleConfigForm
-            config={config}
-            onConfigChange={onConfigChange}
-            onGenerateSchedule={onGenerateSchedule}
-          />
-        </aside>
+    <main className="flex-1">
+      <ContentContainer>
+        <TwoColumnLayout
+          sidebar={
+            <ScheduleConfigForm
+              config={config}
+              onConfigChange={handleConfigChange}
+              onGenerateSchedule={handleGenerateSchedule}
+            />
+          }
+          main={
+            <StackLayout>
+              {scheduleResult ? (
+                <>
+                  <ScheduleGrid scheduleResult={scheduleResult} />
+                  <Legend />
+                </>
+              ) : (
+                <EmptySchedule />
+              )}
 
-        <section className="main-area">
-          <section className="schedule-section">
-            {scheduleResult ? (
-              <>
-                <ScheduleGrid scheduleResult={scheduleResult} />
-                <Legend />
-              </>
-            ) : (
-              <div className="empty-state">
-                <p>{t('schedule.empty')}</p>
-                <p className="empty-state-hint">{t('schedule.emptyHint')}</p>
-              </div>
-            )}
-          </section>
-
-          <section className="validation-section">
-            <ValidationSummary scheduleResult={scheduleResult} />
-          </section>
-        </section>
-      </div>
+              <ValidationSummary scheduleResult={scheduleResult} />
+            </StackLayout>
+          }
+        />
+      </ContentContainer>
     </main>
   );
 }
