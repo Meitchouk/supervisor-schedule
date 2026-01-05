@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found</title>
+    <script>
+      // SPA fallback: redirect to index for GitHub Pages
+      // This allows client-side routing to work on GitHub Pages
+      const location_path = window.location.pathname;
+      // Remove trailing slash and encode to match index handling
+      const redirect_url = location_path.replace(/\/$/, '') + '/?redirect=' + encodeURIComponent(location_path);
+      window.location.replace(redirect_url);
+    </script>
+  </head>
+  <body>
+    <p>Redirecting...</p>
+  </body>
+</html>
