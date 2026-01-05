@@ -1,0 +1,42 @@
+{
+  "header": {
+    "title": "Supervisor Schedule",
+    "subtitle": "Schedule generation and validation tool"
+  },
+  "config": {
+    "title": "Schedule Configuration",
+    "workDays": "Work Days (N)",
+    "workDaysHint": "Number of days per work cycle",
+    "offDays": "Off Days (M)",
+    "offDaysHint": "Number of off days per cycle",
+    "inductionDays": "Induction Days",
+    "inductionDaysHint": "Days required for induction (1–5)",
+    "drillingDaysRequired": "Total Drilling Days Required",
+    "drillingDaysHint": "Total drilling operations needed",
+    "generateButton": "Generate Schedule"
+  },
+  "schedule": {
+    "title": "Schedule Grid",
+    "empty": "No schedule generated yet.",
+    "emptyHint": "Configure parameters and click \"Generate Schedule\" to begin."
+  },
+  "legend": {
+    "title": "Legend"
+  },
+  "validation": {
+    "title": "Validation Summary",
+    "placeholder": "Validation results will appear here after generating a schedule.",
+    "success": "✓ Schedule is valid",
+    "issuesFound": "Issues Found:"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "language": "Language",
+  "controls": {
+    "language": "Language",
+    "theme": "Theme"
+  }
+}

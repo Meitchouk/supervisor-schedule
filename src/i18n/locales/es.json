@@ -1,0 +1,42 @@
+{
+  "header": {
+    "title": "Cronograma de Supervisores",
+    "subtitle": "Herramienta de generación y validación de cronogramas"
+  },
+  "config": {
+    "title": "Configuración del Cronograma",
+    "workDays": "Días de Trabajo (N)",
+    "workDaysHint": "Número de días por ciclo de trabajo",
+    "offDays": "Días Libres (M)",
+    "offDaysHint": "Número de días libres por ciclo",
+    "inductionDays": "Días de Inducción",
+    "inductionDaysHint": "Días requeridos para inducción (1–5)",
+    "drillingDaysRequired": "Total de Días de Perforación Requeridos",
+    "drillingDaysHint": "Total de operaciones de perforación necesarias",
+    "generateButton": "Generar Cronograma"
+  },
+  "schedule": {
+    "title": "Cuadrícula de Cronograma",
+    "empty": "Aún no se ha generado un cronograma.",
+    "emptyHint": "Configure los parámetros y haga clic en \"Generar Cronograma\" para comenzar."
+  },
+  "legend": {
+    "title": "Leyenda"
+  },
+  "validation": {
+    "title": "Resumen de Validación",
+    "placeholder": "Los resultados de validación aparecerán aquí después de generar un cronograma.",
+    "success": "✓ El cronograma es válido",
+    "issuesFound": "Problemas Encontrados:"
+  },
+  "theme": {
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema"
+  },
+  "language": "Idioma",
+  "controls": {
+    "language": "Idioma",
+    "theme": "Tema"
+  }
+}
