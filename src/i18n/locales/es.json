@@ -78,6 +78,7 @@
   },
   "export": {
     "button": "Exportar",
+    "success": "Archivo exportado exitosamente",
     "error": "Error al exportar. Por favor, inténtelo de nuevo.",
     "formats": {
       "pdf": "Exportar como PDF",
@@ -120,10 +121,10 @@
     "emptyHint": "Los cronogramas generados aparecerán aquí",
     "date": "Fecha y Hora",
     "lastGenerated": "Última generación",
-    "workDays": "Días T.",
-    "offDays": "Días L.",
-    "inductionDays": "Días I.",
-    "drillingRequired": "Días P. Req.",
+    "workDays": "Trabajados",
+    "offDays": "Libres",
+    "inductionDays": "Inducción",
+    "drillingRequired": "Perforación Req.",
     "status": "Estado",
     "actions": "Acciones",
     "clearAll": "Limpiar Todo",
@@ -138,5 +139,40 @@
     "duplicateTooltip": "Generado {{count}} veces",
     "note": "El historial se almacena temporalmente y se limita a 20 elementos únicos. Los duplicados incrementan el contador en lugar de crear nuevas entradas.",
     "locale": "es-ES"
+  },
+  "presets": {
+    "title": "Configuraciones Predefinidas",
+    "selectPreset": "Seleccionar configuración",
+    "loaded": "Configuración '{{name}}' cargada exitosamente"
+  },
+  "stats": {
+    "title": "Estadísticas del Cronograma",
+    "totalDays": "Total de Días",
+    "byState": "Días por Estado",
+    "bySupervisor": "Días por Supervisor",
+    "efficiency": "Eficiencia de Rotación",
+    "workDays": "Días Trabajados",
+    "offDays": "Días Libres",
+    "utilizationRate": "Tasa de Utilización",
+    "drillingEfficiency": "Eficiencia de Perforación",
+    "showStats": "Mostrar Estadísticas",
+    "hideStats": "Ocultar Estadísticas"
+  },
+  "comparison": {
+    "title": "Comparar Configuraciones",
+    "enable": "Activar Comparación",
+    "disable": "Desactivar Comparación",
+    "current": "Configuración Actual",
+    "compare": "Configuración a Comparar",
+    "differences": "Diferencias",
+    "noDifferences": "No hay diferencias entre las configuraciones",
+    "generate": "Generar Ambos",
+    "totalDaysDiff": "Diferencia de días totales",
+    "days": "días",
+    "drillingDays": "Días de Perforación",
+    "inductionDays": "Días de Inducción",
+    "travelDays": "Días de Viaje (Subida + Bajada)",
+    "generalMetrics": "Métricas Generales",
+    "supervisorMetrics": "Métricas por Supervisor"
   }
 }

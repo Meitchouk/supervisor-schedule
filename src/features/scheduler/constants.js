@@ -39,8 +39,24 @@ const STATE_TO_BADGE_CLASS = {
     'badge-neutral bg-white text-neutral-content border border-base-300', // Blanco - Empty
 };
 
+// Color mapping for charts
+const STATE_COLORS = {
+  [STATE.UP]: '#3b82f6', // Azul - Travel Up
+  [STATE.INDUCTION]: '#f59e0b', // Naranja - Induction
+  [STATE.DRILLING]: '#10b981', // Verde - Drilling
+  [STATE.DOWN]: '#ef4444', // Rojo - Travel Down
+  [STATE.REST]: '#6b7280', // Gris - Rest
+  [STATE.EMPTY]: '#e5e7eb', // Gris claro - Empty
+};
+
 export function getStateBadgeClass(state) {
   return STATE_TO_BADGE_CLASS[state] || 'badge-neutral';
 }
 
-export { STATE, STATE_TO_LABEL, STATE_TO_COLOR_CLASS, STATE_TO_BADGE_CLASS };
+export {
+  STATE,
+  STATE_TO_LABEL,
+  STATE_TO_COLOR_CLASS,
+  STATE_TO_BADGE_CLASS,
+  STATE_COLORS,
+};

@@ -5,6 +5,7 @@
 
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
 import { X, Download, FileText, FileSpreadsheet, Table } from 'lucide-react';
 import {
   STATE_TO_LABEL,
@@ -79,11 +80,13 @@ export default function ScheduleViewer({ item, onClose }) {
       }
 
       if (!success) {
-        alert(t('export.error'));
+        toast.error(t('export.error'));
+      } else {
+        toast.success(t('export.success'));
       }
     } catch (error) {
       console.error('Export error:', error);
-      alert(t('export.error'));
+      toast.error(t('export.error'));
     } finally {
       setIsExporting(false);
     }

@@ -8,6 +8,8 @@ import { LanguageProvider } from './context/LanguageContext';
 import { LoadingProvider, useLoading } from './context/LoadingContext';
 import { ScheduleHistoryProvider } from './context/ScheduleHistoryContext';
 import { ScheduleProvider } from './context/ScheduleContext';
+import { PresetsProvider } from './context/PresetsContext';
+import { ComparisonProvider } from './context/ComparisonContext';
 import './i18n/config';
 import './styles/globals.css';
 
@@ -67,11 +69,15 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <LoadingProvider>
       <LanguageProvider>
         <ThemeProvider>
-          <ScheduleHistoryProvider>
-            <ScheduleProvider>
-              <AppWrapper />
-            </ScheduleProvider>
-          </ScheduleHistoryProvider>
+          <PresetsProvider>
+            <ComparisonProvider>
+              <ScheduleHistoryProvider>
+                <ScheduleProvider>
+                  <AppWrapper />
+                </ScheduleProvider>
+              </ScheduleHistoryProvider>
+            </ComparisonProvider>
+          </PresetsProvider>
         </ThemeProvider>
       </LanguageProvider>
     </LoadingProvider>

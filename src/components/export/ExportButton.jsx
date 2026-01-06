@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
 import { Download, FileText, FileSpreadsheet, Table } from 'lucide-react';
 import {
   exportToPDF,
@@ -68,11 +69,13 @@ export default function ExportButton() {
       }
 
       if (!success) {
-        alert(t('export.error'));
+        toast.error(t('export.error'));
+      } else {
+        toast.success(t('export.success'));
       }
     } catch (error) {
       console.error('Export error:', error);
-      alert(t('export.error'));
+      toast.error(t('export.error'));
     } finally {
       setIsExporting(false);
     }

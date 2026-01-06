@@ -80,6 +80,7 @@
   },
   "export": {
     "button": "Export",
+    "success": "File exported successfully",
     "error": "Export failed. Please try again.",
     "formats": {
       "pdf": "Export as PDF",
@@ -122,10 +123,10 @@
     "emptyHint": "Generated schedules will appear here",
     "date": "Date & Time",
     "lastGenerated": "Last generated",
-    "workDays": "Work D.",
-    "offDays": "Off D.",
-    "inductionDays": "Induct. D.",
-    "drillingRequired": "Drill. Req.",
+    "workDays": "Work Days",
+    "offDays": "Off Days",
+    "inductionDays": "Induction",
+    "drillingRequired": "Drilling Req.",
     "status": "Status",
     "actions": "Actions",
     "clearAll": "Clear All",
@@ -140,5 +141,40 @@
     "duplicateTooltip": "Generated {{count}} times",
     "note": "History is stored temporarily and limited to 20 unique items. Duplicates increment the counter instead of creating new entries.",
     "locale": "en-US"
+  },
+  "presets": {
+    "title": "Predefined Configurations",
+    "selectPreset": "Select configuration",
+    "loaded": "Configuration '{{name}}' loaded successfully"
+  },
+  "stats": {
+    "title": "Schedule Statistics",
+    "totalDays": "Total Days",
+    "byState": "Days by State",
+    "bySupervisor": "Days by Supervisor",
+    "efficiency": "Rotation Efficiency",
+    "workDays": "Work Days",
+    "offDays": "Off Days",
+    "utilizationRate": "Utilization Rate",
+    "drillingEfficiency": "Drilling Efficiency",
+    "showStats": "Show Statistics",
+    "hideStats": "Hide Statistics"
+  },
+  "comparison": {
+    "title": "Compare Configurations",
+    "enable": "Enable Comparison",
+    "disable": "Disable Comparison",
+    "current": "Current Configuration",
+    "compare": "Configuration to Compare",
+    "differences": "Differences",
+    "noDifferences": "No differences between configurations",
+    "generate": "Generate Both",
+    "totalDaysDiff": "Total days difference",
+    "days": "days",
+    "drillingDays": "Drilling Days",
+    "inductionDays": "Induction Days",
+    "travelDays": "Travel Days (Up + Down)",
+    "generalMetrics": "General Metrics",
+    "supervisorMetrics": "Per-Supervisor Metrics"
   }
 }
