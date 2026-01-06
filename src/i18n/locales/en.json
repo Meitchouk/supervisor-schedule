@@ -1,4 +1,5 @@
 {
+  "documentTitle": "Supervisor Schedule",
   "header": {
     "title": "Supervisor Schedule",
     "subtitle": "Schedule generation and validation tool"
@@ -6,13 +7,13 @@
   "config": {
     "title": "Schedule Configuration",
     "workDays": "Work Days (N)",
-    "workDaysHint": "Number of days per work cycle",
+    "workDaysTooltip": "Number of consecutive days a supervisor works in each cycle",
     "offDays": "Off Days (M)",
-    "offDaysHint": "Number of off days per cycle",
+    "offDaysTooltip": "Number of consecutive days off per cycle",
     "inductionDays": "Induction Days",
-    "inductionDaysHint": "Days required for induction (1–5)",
+    "inductionDaysTooltip": "Number of days required for new staff induction (1–5 days)",
     "drillingDaysRequired": "Total Drilling Days Required",
-    "drillingDaysHint": "Total drilling operations needed",
+    "drillingDaysRequiredTooltip": "Total number of drilling operations that must be scheduled",
     "generateButton": "Generate Schedule"
   },
   "schedule": {
@@ -26,17 +27,23 @@
   "validation": {
     "title": "Validation Summary",
     "placeholder": "Validation results will appear here after generating a schedule.",
-    "success": "✓ Schedule is valid",
+    "success": "Schedule is valid",
     "issuesFound": "Issues Found:"
   },
   "theme": {
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System"
+    "light": "light",
+    "dark": "dark",
+    "system": "system"
   },
   "language": "Language",
   "controls": {
     "language": "Language",
-    "theme": "Theme"
+    "theme": "Theme",
+    "selectLanguage": "Select language",
+    "toggleTheme": "Switch to {{mode}} mode",
+    "languages": {
+      "english": "English",
+      "spanish": "Español"
+    }
   }
 }

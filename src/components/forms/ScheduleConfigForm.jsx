@@ -1,9 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
+import { InfoTooltip } from '../../components/ui';
+import { useLoading } from '../../context/LoadingContext';
 
 /**
  * ScheduleConfigForm component.
- * Form for configuring schedule generation parameters.
+ * Form for configuring schedule generation parameters using daisyUI.
+ * Disables all inputs during loading.
  */
 export default function ScheduleConfigForm({
   config,
@@ -11,6 +13,7 @@ export default function ScheduleConfigForm({
   onGenerateSchedule,
 }) {
   const { t } = useTranslation();
+  const { isLoading } = useLoading();
 
   const handleInputChange = (field, value) => {
     const numValue = parseInt(value, 10);
@@ -20,12 +23,19 @@ export default function ScheduleConfigForm({
   };
 
   return (
-    <form className="config-form" onSubmit={(e) => e.preventDefault()}>
-      <fieldset>
-        <legend>{t('config.title')}</legend>
+    <form
+      className="card bg-base-100 shadow-xl h-full"
+      onSubmit={(e) => e.preventDefault()}
+    >
+      <div className="card-body h-full flex flex-col gap-4">
+        <h2 className="card-title">{t('config.title')}</h2>
 
-        <div className="form-group">
-          <label htmlFor="workDays">{t('config.workDays')}</label>
+        <div className="form-control w-full">
+          <label htmlFor="workDays" className="label">
+            <InfoTooltip tooltipKey="config.workDaysTooltip">
+              <span className="label-text">{t('config.workDays')}</span>
+            </InfoTooltip>
+          </label>
           <input
             id="workDays"
             type="number"
@@ -33,13 +43,17 @@ export default function ScheduleConfigForm({
             max="31"
             value={config.workDays}
             onChange={(e) => handleInputChange('workDays', e.target.value)}
-            className="form-input"
+            className="input input-bordered w-full"
+            disabled={isLoading}
           />
-          <small>{t('config.workDaysHint')}</small>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="offDays">{t('config.offDays')}</label>
+        <div className="form-control w-full">
+          <label htmlFor="offDays" className="label">
+            <InfoTooltip tooltipKey="config.offDaysTooltip">
+              <span className="label-text">{t('config.offDays')}</span>
+            </InfoTooltip>
+          </label>
           <input
             id="offDays"
             type="number"
@@ -47,13 +61,17 @@ export default function ScheduleConfigForm({
             max="31"
             value={config.offDays}
             onChange={(e) => handleInputChange('offDays', e.target.value)}
-            className="form-input"
+            className="input input-bordered w-full"
+            disabled={isLoading}
           />
-          <small>{t('config.offDaysHint')}</small>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="inductionDays">{t('config.inductionDays')}</label>
+        <div className="form-control w-full">
+          <label htmlFor="inductionDays" className="label">
+            <InfoTooltip tooltipKey="config.inductionDaysTooltip">
+              <span className="label-text">{t('config.inductionDays')}</span>
+            </InfoTooltip>
+          </label>
           <input
             id="inductionDays"
             type="number"
@@ -61,14 +79,18 @@ export default function ScheduleConfigForm({
             max="5"
             value={config.inductionDays}
             onChange={(e) => handleInputChange('inductionDays', e.target.value)}
-            className="form-input"
+            className="input input-bordered w-full"
+            disabled={isLoading}
           />
-          <small>{t('config.inductionDaysHint')}</small>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="drillingDaysRequired">
-            {t('config.drillingDaysRequired')}
+        <div className="form-control w-full">
+          <label htmlFor="drillingDaysRequired" className="label">
+            <InfoTooltip tooltipKey="config.drillingDaysRequiredTooltip">
+              <span className="label-text">
+                {t('config.drillingDaysRequired')}
+              </span>
+            </InfoTooltip>
           </label>
           <input
             id="drillingDaysRequired"
@@ -79,19 +101,25 @@ export default function ScheduleConfigForm({
             onChange={(e) =>
               handleInputChange('drillingDaysRequired', e.target.value)
             }
-            className="form-input"
+            className="input input-bordered w-full"
+            disabled={isLoading}
           />
-          <small>{t('config.drillingDaysHint')}</small>
         </div>
 
-        <button
-          type="button"
-          onClick={onGenerateSchedule}
-          className={clsx('btn', 'btn-primary')}
-        >
-          {t('config.generateButton')}
-        </button>
-      </fieldset>
+        <div className="card-actions justify-end mt-auto">
+          <button
+            type="button"
+            onClick={onGenerateSchedule}
+            className="btn btn-primary w-full"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <span className="loading loading-spinner loading-sm" />
+            ) : null}
+            {t('config.generateButton')}
+          </button>
+        </div>
+      </div>
     </form>
   );
 }

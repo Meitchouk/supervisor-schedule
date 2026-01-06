@@ -12,8 +12,23 @@ const LanguageContext = createContext();
  */
 export function LanguageProvider({ children }) {
   const [language, setLanguage] = useState(() => {
+    // If user has manually set a language, use it
     const saved = localStorage.getItem('language');
-    return saved || i18next.language || 'en';
+    if (saved) return saved;
+
+    // Otherwise, check browser language preference
+    const browserLang = navigator.language || navigator.userLanguage;
+    if (browserLang) {
+      // Extract primary language code (e.g., 'es-ES' -> 'es')
+      const langCode = browserLang.split('-')[0].toLowerCase();
+      // Check if we support this language
+      if (langCode === 'es' || langCode === 'en') {
+        return langCode;
+      }
+    }
+
+    // Default to Spanish if no preference found
+    return 'es';
   });
 
   useEffect(() => {

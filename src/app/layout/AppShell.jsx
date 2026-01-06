@@ -1,12 +1,12 @@
 /**
  * AppShell component.
- * Wraps the application with a consistent flex layout structure.
- * Provides a responsive container for Header, Body, and Footer.
+ * Wraps the application with a consistent flex layout structure using daisyUI.
+ * Header and Footer span full width, while Body content is centered and limited.
  */
 export default function AppShell({ children }) {
   return (
-    <div className="app-shell">
-      <div className="app-container">{children}</div>
+    <div className="flex flex-col min-h-screen bg-base-100">
+      {children}
     </div>
   );
 }

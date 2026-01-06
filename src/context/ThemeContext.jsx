@@ -10,26 +10,34 @@ const ThemeContext = createContext();
  */
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
+    // If user has manually set a theme, use it
     const saved = localStorage.getItem('theme');
     if (saved) return saved;
 
-    // Check system preference
+    // Otherwise, check browser/system preference
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return 'dark';
     }
-    return 'light';
+    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+      return 'light';
+    }
+
+    // Default to dark if no preference found
+    return 'dark';
   });
 
   useEffect(() => {
     localStorage.setItem('theme', theme);
     const root = document.documentElement;
 
+    // Set data-theme attribute for daisyUI
+    root.setAttribute('data-theme', theme);
+
+    // Keep dark class for Tailwind dark mode
     if (theme === 'dark') {
-      root.classList.add('dark-theme');
-      root.classList.remove('light-theme');
+      root.classList.add('dark');
     } else {
-      root.classList.add('light-theme');
-      root.classList.remove('dark-theme');
+      root.classList.remove('dark');
     }
   }, [theme]);
 
