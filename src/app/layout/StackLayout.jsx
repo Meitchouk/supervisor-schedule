@@ -7,9 +7,9 @@ import { clsx } from 'clsx';
  */
 export default function StackLayout({ children, spacing = 'default' }) {
   const spacingClasses = {
-    tight: 'gap-4',
-    default: 'gap-8',
-    loose: 'gap-12',
+    tight: 'gap-3 md:gap-4',
+    default: 'gap-4 md:gap-8',
+    loose: 'gap-6 md:gap-12',
   };
 
   return (

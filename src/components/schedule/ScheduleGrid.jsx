@@ -7,6 +7,19 @@ import { useTranslation } from 'react-i18next';
 export default function ScheduleGrid({ scheduleResult }) {
   const { t } = useTranslation();
 
+  const getStateBadgeVariant = (state) => {
+    switch (state) {
+      case 'WORKING':
+        return 'badge-success';
+      case 'OFF':
+        return 'badge-error';
+      case 'INDUCTION':
+        return 'badge-warning';
+      default:
+        return 'badge-neutral';
+    }
+  };
+
   if (
     !scheduleResult ||
     !scheduleResult.days ||
@@ -33,13 +46,7 @@ export default function ScheduleGrid({ scheduleResult }) {
                   <td>{day.dayNumber}</td>
                   <td>
                     <span
-                      className={`badge ${
-                        day.state === 'WORKING'
-                          ? 'badge-success'
-                          : day.state === 'OFF'
-                            ? 'badge-error'
-                            : 'badge-warning'
-                      }`}
+                      className={`badge ${getStateBadgeVariant(day.state)}`}
                     >
                       {day.state}
                     </span>

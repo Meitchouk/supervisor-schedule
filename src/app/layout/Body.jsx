@@ -16,7 +16,7 @@ export default function Body() {
     useSchedule();
 
   return (
-    <main className="flex-1">
+    <main className="flex-1 flex">
       <ContentContainer>
         <TwoColumnLayout
           sidebar={

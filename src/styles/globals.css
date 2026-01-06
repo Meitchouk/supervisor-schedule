@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* daisyUI base styles */
 @layer base {
   :root {
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

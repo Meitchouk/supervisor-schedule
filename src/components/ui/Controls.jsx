@@ -17,20 +17,20 @@ export default function Controls() {
   const { isLoading } = useLoading();
 
   return (
-    <div className="flex gap-3 items-end">
+    <div className="flex gap-2 md:gap-3 items-end flex-wrap justify-center md:justify-start">
       {/* Language Select */}
       <div className="form-control">
         <label htmlFor="language-select" className="label">
-          <span className="label-text font-semibold flex items-center gap-2">
-            <Languages size={18} />
-            {t('controls.language')}
+          <span className="label-text text-xs md:text-sm font-semibold flex items-center gap-1 md:gap-2">
+            <Languages size={16} className="md:w-[18px] md:h-[18px]" />
+            <span className="hidden md:inline">{t('controls.language')}</span>
           </span>
         </label>
         <select
           id="language-select"
           value={language}
           onChange={(e) => changeLanguage(e.target.value)}
-          className="select select-bordered min-w-[140px]"
+          className="select select-bordered select-sm md:select-md min-w-[100px] md:min-w-[140px]"
           aria-label={t('controls.selectLanguage')}
           disabled={isLoading}
         >
@@ -43,7 +43,7 @@ export default function Controls() {
       <button
         type="button"
         onClick={toggleTheme}
-        className={clsx('btn btn-square btn-ghost')}
+        className={clsx('btn btn-square btn-ghost btn-sm md:btn-md')}
         title={t('controls.toggleTheme', {
           mode: theme === 'dark' ? t('theme.light') : t('theme.dark'),
         })}
@@ -52,7 +52,11 @@ export default function Controls() {
         })}
         disabled={isLoading}
       >
-        {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+        {theme === 'dark' ? (
+          <Sun size={18} className="md:w-5 md:h-5" />
+        ) : (
+          <Moon size={18} className="md:w-5 md:h-5" />
+        )}
       </button>
     </div>
   );

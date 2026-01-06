@@ -1,4 +1,5 @@
 {
+  "documentTitle": "Cronograma de Supervisores",
   "header": {
     "title": "Cronograma de Supervisores",
     "subtitle": "Herramienta de generación y validación de cronogramas"
@@ -6,13 +7,13 @@
   "config": {
     "title": "Configuración del Cronograma",
     "workDays": "Días de Trabajo (N)",
-    "workDaysHint": "Número de días por ciclo de trabajo",
+    "workDaysTooltip": "Número de días consecutivos que un supervisor trabaja en cada ciclo",
     "offDays": "Días Libres (M)",
-    "offDaysHint": "Número de días libres por ciclo",
+    "offDaysTooltip": "Número de días consecutivos libres por ciclo",
     "inductionDays": "Días de Inducción",
-    "inductionDaysHint": "Días requeridos para inducción (1–5)",
+    "inductionDaysTooltip": "Número de días requeridos para inducción del personal nuevo (1–5 días)",
     "drillingDaysRequired": "Total de Días de Perforación Requeridos",
-    "drillingDaysHint": "Total de operaciones de perforación necesarias",
+    "drillingDaysRequiredTooltip": "Número total de operaciones de perforación que deben ser programadas",
     "generateButton": "Generar Cronograma"
   },
   "schedule": {

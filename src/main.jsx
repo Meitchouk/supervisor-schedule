@@ -1,13 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
+import { useTranslation } from 'react-i18next';
 
 import App from './app/App';
 import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider } from './context/LanguageContext';
-import { LoadingProvider } from './context/LoadingContext';
+import { LoadingProvider, useLoading } from './context/LoadingContext';
 import { ScheduleProvider } from './context/ScheduleContext';
 import './i18n/config';
 import './styles/globals.css';
+
+/**
+ * AppWrapper component to handle dynamic document title and initial loading
+ */
+function AppWrapper() {
+  const { t } = useTranslation();
+  const { startInitialLoading, stopInitialLoading } = useLoading();
+
+  useEffect(() => {
+    document.title = t('documentTitle');
+  }, [t]);
+
+  useEffect(() => {
+    // Activate initial loading on mount (only affects LoadingBar)
+    startInitialLoading();
+
+    // Stop initial loading after app setup
+    const timer = setTimeout(() => {
+      stopInitialLoading();
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+      stopInitialLoading(); // Ensure initial loading stops on unmount
+    };
+  }, []); // Empty dependency array to run only once
+
+  return <App />;
+}
 
 /**
  * Main entry point for the React application.
@@ -36,7 +66,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <LanguageProvider>
         <ThemeProvider>
           <ScheduleProvider>
-            <App />
+            <AppWrapper />
           </ScheduleProvider>
         </ThemeProvider>
       </LanguageProvider>

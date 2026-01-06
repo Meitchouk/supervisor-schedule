@@ -26,19 +26,18 @@ export default function Legend() {
     <div className="card bg-base-100 shadow-xl">
       <div className="card-body">
         <h3 className="card-title">{t('legend.title')}</h3>
-        <div className="flex flex-col gap-2">
+        <ul className="menu menu-compact">
           {states.map((state) => (
-            <div
-              key={state}
-              className="flex items-center gap-3 p-2 rounded hover:bg-base-200 transition"
-            >
-              <div className={`badge ${getBadgeVariant(state)} badge-lg`} />
-              <span className="text-sm font-medium">
-                {STATE_TO_LABEL[state]} – {state}
-              </span>
-            </div>
+            <li key={state}>
+              <div className="flex">
+                <div className={`badge ${getBadgeVariant(state)} badge-lg`} />
+                <span>
+                  {STATE_TO_LABEL[state]} – {state}
+                </span>
+              </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   );

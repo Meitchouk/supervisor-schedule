@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { InfoTooltip } from '../../components/ui';
 import { useLoading } from '../../context/LoadingContext';
 
 /**
@@ -26,13 +27,14 @@ export default function ScheduleConfigForm({
       className="card bg-base-100 shadow-xl h-full"
       onSubmit={(e) => e.preventDefault()}
     >
-      <div className="card-body h-full flex flex-col">
+      <div className="card-body h-full flex flex-col gap-4">
         <h2 className="card-title">{t('config.title')}</h2>
 
-        <div className="form-control">
+        <div className="form-control w-full">
           <label htmlFor="workDays" className="label">
-            <span className="label-text">{t('config.workDays')}</span>
-            <span className="label-text-alt">{t('config.workDaysHint')}</span>
+            <InfoTooltip tooltipKey="config.workDaysTooltip">
+              <span className="label-text">{t('config.workDays')}</span>
+            </InfoTooltip>
           </label>
           <input
             id="workDays"
@@ -46,10 +48,11 @@ export default function ScheduleConfigForm({
           />
         </div>
 
-        <div className="form-control">
+        <div className="form-control w-full">
           <label htmlFor="offDays" className="label">
-            <span className="label-text">{t('config.offDays')}</span>
-            <span className="label-text-alt">{t('config.offDaysHint')}</span>
+            <InfoTooltip tooltipKey="config.offDaysTooltip">
+              <span className="label-text">{t('config.offDays')}</span>
+            </InfoTooltip>
           </label>
           <input
             id="offDays"
@@ -63,12 +66,11 @@ export default function ScheduleConfigForm({
           />
         </div>
 
-        <div className="form-control">
+        <div className="form-control w-full">
           <label htmlFor="inductionDays" className="label">
-            <span className="label-text">{t('config.inductionDays')}</span>
-            <span className="label-text-alt">
-              {t('config.inductionDaysHint')}
-            </span>
+            <InfoTooltip tooltipKey="config.inductionDaysTooltip">
+              <span className="label-text">{t('config.inductionDays')}</span>
+            </InfoTooltip>
           </label>
           <input
             id="inductionDays"
@@ -82,14 +84,13 @@ export default function ScheduleConfigForm({
           />
         </div>
 
-        <div className="form-control">
+        <div className="form-control w-full">
           <label htmlFor="drillingDaysRequired" className="label">
-            <span className="label-text">
-              {t('config.drillingDaysRequired')}
-            </span>
-            <span className="label-text-alt">
-              {t('config.drillingDaysHint')}
-            </span>
+            <InfoTooltip tooltipKey="config.drillingDaysRequiredTooltip">
+              <span className="label-text">
+                {t('config.drillingDaysRequired')}
+              </span>
+            </InfoTooltip>
           </label>
           <input
             id="drillingDaysRequired"
@@ -105,7 +106,7 @@ export default function ScheduleConfigForm({
           />
         </div>
 
-        <div className="card-actions justify-end mt-auto pt-4">
+        <div className="card-actions justify-end mt-auto">
           <button
             type="button"
             onClick={onGenerateSchedule}

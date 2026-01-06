@@ -24,15 +24,21 @@ export function useLoading() {
  */
 export function LoadingProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(false);
 
   const startLoading = () => setIsLoading(true);
   const stopLoading = () => setIsLoading(false);
+  const startInitialLoading = () => setIsInitialLoading(true);
+  const stopInitialLoading = () => setIsInitialLoading(false);
 
   const value = {
     isLoading,
     startLoading,
     stopLoading,
     setLoading: setIsLoading,
+    isInitialLoading,
+    startInitialLoading,
+    stopInitialLoading,
   };
 
   return (

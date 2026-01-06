@@ -6,7 +6,7 @@
 export default function ContentContainer({ children }) {
   return (
     <div className="w-full">
-      <div className="max-w-6xl mx-auto px-4 py-10">{children}</div>
+      <div className="max-w-7xl mx-auto px-4 py-6 md:py-10">{children}</div>
     </div>
   );
 }

@@ -12,17 +12,19 @@ export default function Header() {
 
   return (
     <header className="w-full bg-base-100">
-      <div className="max-w-6xl mx-auto px-4 py-6">
-        <div className="flex justify-between items-start gap-5">
-          <div className="flex-1 text-center">
-            <h1 className="text-4xl font-bold text-primary mb-2">
+      <div className="max-w-6xl mx-auto px-4 py-4 md:py-6">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 md:gap-5">
+          <div className="flex-1 text-center md:text-left">
+            <h1 className="text-2xl md:text-4xl font-bold text-primary mb-1 md:mb-2">
               {t('header.title')}
             </h1>
-            <p className="text-lg text-base-content/70">
+            <p className="text-sm md:text-lg text-base-content/70">
               {t('header.subtitle')}
             </p>
           </div>
-          <Controls />
+          <div className="self-center md:self-start">
+            <Controls />
+          </div>
         </div>
       </div>
       <LoadingBar />
