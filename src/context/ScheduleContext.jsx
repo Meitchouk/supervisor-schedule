@@ -1,5 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 import { useLoading } from './LoadingContext';
+import { generateSchedule } from '../features/scheduler/generateSchedule';
+import { validateSchedule } from '../features/scheduler/validateSchedule';
 
 const ScheduleContext = createContext(null);
 
@@ -10,10 +12,10 @@ const ScheduleContext = createContext(null);
 export function ScheduleProvider({ children }) {
   const { startLoading, stopLoading } = useLoading();
   const [config, setConfig] = useState({
-    workDays: 5,
-    offDays: 2,
-    inductionDays: 1,
-    drillingDaysRequired: 10,
+    workDays: 14,
+    offDays: 7,
+    inductionDays: 5,
+    drillingDaysRequired: 30,
   });
 
   const [scheduleResult, setScheduleResult] = useState(null);
@@ -28,12 +30,25 @@ export function ScheduleProvider({ children }) {
   const handleGenerateSchedule = async () => {
     startLoading();
     try {
-      // Simulate async operation (e.g., API call or complex calculation)
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Simulate async operation for better UX
+      await new Promise((resolve) => setTimeout(resolve, 800));
 
-      // TODO: Implement actual schedule generation logic
-      console.log('Generate schedule with config:', config);
-      setScheduleResult(null);
+      // Generate schedule
+      const result = generateSchedule(config);
+
+      // Validate schedule
+      const validation = validateSchedule(result);
+
+      // Combine results
+      const finalResult = {
+        ...result,
+        issues: validation.issues,
+        hasErrors: validation.hasErrors,
+      };
+
+      setScheduleResult(finalResult);
+
+      // console.log('Schedule generated:', finalResult);
     } finally {
       stopLoading();
     }

@@ -34,7 +34,8 @@ function AppWrapper() {
       clearTimeout(timer);
       stopInitialLoading(); // Ensure initial loading stops on unmount
     };
-  }, []); // Empty dependency array to run only once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return <App />;
 }

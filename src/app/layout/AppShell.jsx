@@ -5,8 +5,6 @@
  */
 export default function AppShell({ children }) {
   return (
-    <div className="flex flex-col min-h-screen bg-base-100">
-      {children}
-    </div>
+    <div className="flex flex-col min-h-screen bg-base-100">{children}</div>
   );
 }

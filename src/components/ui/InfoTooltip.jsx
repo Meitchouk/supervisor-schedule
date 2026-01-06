@@ -9,21 +9,39 @@ import { useTranslation } from 'react-i18next';
  * @param {string} tooltipKey - i18n key for the tooltip text
  * @param {ReactNode} children - Content to display before the info icon
  */
-export default function InfoTooltip({ tooltipKey, children }) {
+export default function InfoTooltip({ tooltipKey, children, position = 'right', icon = true }) {
   const { t } = useTranslation();
   const tooltipText = t(tooltipKey);
+  let tooltipPositionClass = 'tooltip-right';
+
+  if (position === 'left') {
+    tooltipPositionClass = 'tooltip-left';
+  } else if (position === 'top') {
+    tooltipPositionClass = 'tooltip-top';
+  } else if (position === 'bottom') {
+    tooltipPositionClass = 'tooltip-bottom';
+  }
 
   return (
     <div className="flex items-center gap-2">
-      <div className="tooltip tooltip-top">
-        <div className="tooltip-content bg-base-300 text-base-content">
-          <span className="text-xs">{tooltipText}</span>
+      {icon ? (
+        <div className={`tooltip ${tooltipPositionClass}`}>
+          <div className="tooltip-content bg-base-300 text-base-content">
+            <span className="text-xs">{tooltipText}</span>
+          </div>
+          <button className="btn btn-ghost btn-xs btn-circle" type="button">
+            <Info className="h-4 w-4 text-info opacity-70" />
+          </button>
         </div>
-        <button className="btn btn-ghost btn-xs btn-circle" type="button">
-          <Info className="h-4 w-4 text-info opacity-70" />
-        </button>
-      </div>
-      {children}
+      ) : (
+        <div className={`tooltip ${tooltipPositionClass}`}>
+          <div className="tooltip-content bg-base-300 text-base-content">
+            <span className="text-xs">{tooltipText}</span>
+          </div>
+          {children}
+        </div>
+      )}
+      {icon && children}
     </div>
   );
 }

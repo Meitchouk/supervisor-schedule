@@ -1,14 +1,16 @@
 import { useTranslation } from 'react-i18next';
-import { Sun, Moon, Languages } from 'lucide-react';
+
+import { Sun, Moon, Languages, Settings } from 'lucide-react';
 import { clsx } from 'clsx';
 import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { useLoading } from '../../context/LoadingContext';
+import InfoTooltip from './InfoTooltip';
 
 /**
- * Language and theme switcher component using daisyUI.
- * Uses custom hooks to manage language and theme state from context.
- * Disables during loading.
+ * Minimalist sticky controls for language and theme switching.
+ * Desktop: Two icon buttons with dropdown menus
+ * Mobile: Single settings button with combined menu
  */
 export default function Controls() {
   const { t } = useTranslation();
@@ -17,47 +19,117 @@ export default function Controls() {
   const { isLoading } = useLoading();
 
   return (
-    <div className="flex gap-2 md:gap-3 items-end flex-wrap justify-center md:justify-start">
-      {/* Language Select */}
-      <div className="form-control">
-        <label htmlFor="language-select" className="label">
-          <span className="label-text text-xs md:text-sm font-semibold flex items-center gap-1 md:gap-2">
-            <Languages size={16} className="md:w-[18px] md:h-[18px]" />
-            <span className="hidden md:inline">{t('controls.language')}</span>
-          </span>
-        </label>
-        <select
-          id="language-select"
-          value={language}
-          onChange={(e) => changeLanguage(e.target.value)}
-          className="select select-bordered select-sm md:select-md min-w-[100px] md:min-w-[140px]"
-          aria-label={t('controls.selectLanguage')}
+    <div className="fixed top-4 right-4 z-50">
+      {/* Desktop: Two separate buttons */}
+      <div className="hidden md:flex gap-2">
+        {/* Language Menu */}
+        <div className="dropdown dropdown-end">
+          <button
+            type="button"
+            tabIndex={0}
+            className="btn btn-ghost btn-sm btn-circle"
+            aria-label={t('controls.selectLanguage')}
+            disabled={isLoading}
+          >
+            <Languages size={20} />
+          </button>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu p-2 shadow-lg bg-base-200 rounded-box w-40 mt-2"
+          >
+            <li>
+              <button
+                onClick={() => changeLanguage('en')}
+                className={clsx(language === 'en' && 'active')}
+              >
+                {t('controls.languages.english')}
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => changeLanguage('es')}
+                className={clsx(language === 'es' && 'active')}
+              >
+                {t('controls.languages.spanish')}
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        {/* Theme Toggle */}
+        <button
+          type="button"
+          onClick={toggleTheme}
+          className="btn btn-ghost btn-sm btn-circle"
+          aria-label={t('controls.toggleTheme', {
+            mode: theme === 'dark' ? t('theme.light') : t('theme.dark'),
+          })}
           disabled={isLoading}
         >
-          <option value="en">{t('controls.languages.english')}</option>
-          <option value="es">{t('controls.languages.spanish')}</option>
-        </select>
+          {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+        </button>
       </div>
 
-      {/* Theme Toggle */}
-      <button
-        type="button"
-        onClick={toggleTheme}
-        className={clsx('btn btn-square btn-ghost btn-sm md:btn-md')}
-        title={t('controls.toggleTheme', {
-          mode: theme === 'dark' ? t('theme.light') : t('theme.dark'),
-        })}
-        aria-label={t('controls.toggleTheme', {
-          mode: theme === 'dark' ? t('theme.light') : t('theme.dark'),
-        })}
-        disabled={isLoading}
-      >
-        {theme === 'dark' ? (
-          <Sun size={18} className="md:w-5 md:h-5" />
-        ) : (
-          <Moon size={18} className="md:w-5 md:h-5" />
-        )}
-      </button>
+      {/* Mobile: Settings dropdown with toggles */}
+      <div className="md:hidden">
+        <div className="dropdown dropdown-end">
+          <button
+            type="button"
+            tabIndex={0}
+            className="btn btn-ghost btn-sm btn-circle"
+            aria-label={t('controls.settings')}
+            disabled={isLoading}
+          >
+            <Settings size={20} />
+          </button>
+          <div
+            tabIndex={0}
+            className="dropdown-content bg-base-200 rounded-box p-4 shadow-lg w-64 mt-2"
+          >
+            {/* Language Toggle */}
+            <div className="mb-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Languages size={16} className="text-base-content/70" />
+                <span className="text-sm font-medium">{t('controls.language')}</span>
+                <InfoTooltip tooltipKey="controls.languageTooltip" position="bottom" />
+              </div>
+              <label className="label cursor-pointer justify-between gap-3 w-36">
+                <span className="label-text font-medium">ES</span>
+                <input
+                  type="checkbox"
+                  className="toggle toggle-primary toggle-sm"
+                  checked={language === 'en'}
+                  onChange={() => changeLanguage(language === 'en' ? 'es' : 'en')}
+                  disabled={isLoading}
+                />
+                <span className="label-text font-medium">EN</span>
+              </label>
+            </div>
+
+            <div className="divider my-2"></div>
+
+            {/* Theme Toggle */}
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                {theme === 'dark' ? <Moon size={16} className="text-base-content/70" /> : <Sun size={16} className="text-base-content/70" />}
+                <span className="text-sm font-medium">{t('controls.theme')}</span>
+                <InfoTooltip tooltipKey="controls.themeTooltip" position="bottom" />
+              </div>
+              <label className="label cursor-pointer justify-between gap-3 w-36">
+                <Moon size={16} />
+                <input
+                  type="checkbox"
+                  className="toggle toggle-primary toggle-sm"
+                  checked={theme === 'light'}
+                  onChange={toggleTheme}
+                  disabled={isLoading}
+                />
+                <Sun size={16} />
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

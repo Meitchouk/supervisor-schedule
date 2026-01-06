@@ -1,7 +1,19 @@
-import { ScheduleConfigForm } from '../../components/forms';
-import { ScheduleGrid, Legend, EmptySchedule } from '../../components/schedule';
-import { ValidationSummary } from '../../components/validation';
+import {
+  ScheduleConfigForm,
+} from '../../components/forms';
+import {
+  ScheduleGrid,
+  Legend,
+  EmptySchedule,
+  ScheduleGridSkeleton,
+  LegendSkeleton,
+} from '../../components/schedule';
+import {
+  ValidationSummary,
+  ValidationSummarySkeleton,
+} from '../../components/validation';
 import { useSchedule } from '../../context/ScheduleContext';
+import { useLoading } from '../../context/LoadingContext';
 import ContentContainer from './ContentContainer';
 import TwoColumnLayout from './TwoColumnLayout';
 import StackLayout from './StackLayout';
@@ -14,6 +26,7 @@ import StackLayout from './StackLayout';
 export default function Body() {
   const { config, scheduleResult, handleConfigChange, handleGenerateSchedule } =
     useSchedule();
+  const { isLoading } = useLoading();
 
   return (
     <main className="flex-1 flex">
@@ -28,7 +41,12 @@ export default function Body() {
           }
           main={
             <StackLayout>
-              {scheduleResult ? (
+              {isLoading ? (
+                <>
+                  <ScheduleGridSkeleton />
+                  <LegendSkeleton />
+                </>
+              ) : scheduleResult ? (
                 <>
                   <ScheduleGrid scheduleResult={scheduleResult} />
                   <Legend />
@@ -37,7 +55,11 @@ export default function Body() {
                 <EmptySchedule />
               )}
 
-              <ValidationSummary scheduleResult={scheduleResult} />
+              {isLoading ? (
+                <ValidationSummarySkeleton />
+              ) : (
+                <ValidationSummary scheduleResult={scheduleResult} />
+              )}
             </StackLayout>
           }
         />
