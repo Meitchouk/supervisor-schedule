@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useLoading } from '../../context/LoadingContext';
 
-/**
- * LoadingBar component
- * Displays an animated progress bar when loading is active
- * On mobile: sticky at top of viewport
- * On desktop: normal flow within header
- */
+function debounce(func, delay) {
+  let timeoutId;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func(...args), delay);
+  };
+}
+
 export default function LoadingBar() {
   const { isLoading, isInitialLoading } = useLoading();
   const [isMobile, setIsMobile] = useState(false);
@@ -18,9 +20,10 @@ export default function LoadingBar() {
     };
 
     checkMobile();
-    window.addEventListener('resize', checkMobile);
+    const debouncedCheckMobile = debounce(checkMobile, 150);
+    window.addEventListener('resize', debouncedCheckMobile);
 
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', debouncedCheckMobile);
   }, []);
 
   useEffect(() => {
@@ -30,19 +33,16 @@ export default function LoadingBar() {
     }
 
     const handleScroll = () => {
-      // Si el scroll es mayor a la altura del header (~100px), hacerlo sticky
       setIsSticky(window.scrollY > 100);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const debouncedHandleScroll = debounce(handleScroll, 100);
+    window.addEventListener('scroll', debouncedHandleScroll);
+    return () => window.removeEventListener('scroll', debouncedHandleScroll);
   }, [isMobile]);
 
   const showLoading = isLoading || isInitialLoading;
 
-  // Mobile: fixed top-0 cuando se hace scroll, normal cuando está arriba
-  // Desktop: flujo normal en header
-  // Con loading: animación morada, Sin loading: barra estática primaria
   const containerClasses = `w-full ${
     isMobile && isSticky ? 'fixed top-0 left-0 right-0 z-50 bg-base-100' : ''
   }`;
