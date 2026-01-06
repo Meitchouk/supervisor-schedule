@@ -1,9 +1,8 @@
 import { generateSchedule } from './src/features/scheduler/generateSchedule.js';
 
-// CASE 4: El que está fallando
 const config = {
   workDays: 14,
-  offDays: 6, // ← Cambio: offDays = 6
+  offDays: 6,
   inductionDays: 4,
   drillingDaysRequired: 30,
 };

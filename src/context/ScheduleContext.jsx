@@ -48,7 +48,7 @@ export function ScheduleProvider({ children }) {
 
       setScheduleResult(finalResult);
 
-      console.log('Schedule generated:', finalResult);
+      // console.log('Schedule generated:', finalResult);
     } finally {
       stopLoading();
     }

@@ -215,14 +215,14 @@ export function generateSchedule(config) {
   const totalDays =
     drillingDaysRequired + cycleDays * 6 + (1 + inductionDays) + 60;
 
-  console.log('[GENERATE] Config:', {
-    workDays,
-    offDays,
-    inductionDays,
-    drillingDaysRequired,
-    cycleDays,
-    totalDays,
-  });
+  // console.log('[GENERATE] Config:', {
+  //   workDays,
+  //   offDays,
+  //   inductionDays,
+  //   drillingDaysRequired,
+  //   cycleDays,
+  //   totalDays,
+  // });
 
   const s1Schedule = buildS1Schedule({
     totalDays,
@@ -237,7 +237,7 @@ export function generateSchedule(config) {
   const s1FirstDownDay = 1 + workDays;
   const s3EntryDay = Math.max(0, s1FirstDownDay - inductionDays - 1);
 
-  console.log('[GENERATE] Timing:', { s1FirstDownDay, s3EntryDay });
+  // console.log('[GENERATE] Timing:', { s1FirstDownDay, s3EntryDay });
 
   const { s2Blocks, s3Blocks } = computeRotationOffsiteBlocks({
     totalDays,
@@ -245,7 +245,7 @@ export function generateSchedule(config) {
     offDays,
   });
 
-  console.log('[GENERATE] Offsite blocks calculated:', { s2Blocks, s3Blocks });
+  // console.log('[GENERATE] Offsite blocks calculated:', { s2Blocks, s3Blocks });
 
   // S2 enters from day 0
   fillFlexibleSupervisor({
@@ -294,13 +294,13 @@ export function generateSchedule(config) {
     if (daysWithTwoDrilling >= drillingDaysRequired) {
       const finalDayIndex = day + 1;
 
-      console.log('[GENERATE] Schedule complete:', {
-        finalDayIndex,
-        daysWithTwoDrilling,
-        firstDrillingDay,
-        days3Drilling: drillingCountByDay.filter((c) => c === 3).length,
-        days1Drilling: drillingCountByDay.filter((c) => c === 1).length,
-      });
+      // console.log('[GENERATE] Schedule complete:', {
+      //   finalDayIndex,
+      //   daysWithTwoDrilling,
+      //   firstDrillingDay,
+      //   days3Drilling: drillingCountByDay.filter((c) => c === 3).length,
+      //   days1Drilling: drillingCountByDay.filter((c) => c === 1).length,
+      // });
 
       return {
         days: days.slice(0, finalDayIndex),

@@ -16,6 +16,12 @@ export default function ScheduleConfigForm({
   const { isLoading } = useLoading();
 
   const handleInputChange = (field, value) => {
+    // Allow empty string for manual editing
+    if (value === '') {
+      onConfigChange(field, '');
+      return;
+    }
+
     const numValue = parseInt(value, 10);
     if (!Number.isNaN(numValue)) {
       onConfigChange(field, numValue);
@@ -24,7 +30,7 @@ export default function ScheduleConfigForm({
 
   return (
     <form
-      className="card bg-base-100 shadow-xl h-auto w-auto inline-block"
+      className="card bg-base-100 shadow-xl w-full"
       onSubmit={(e) => e.preventDefault()}
     >
       <div className="card-body flex flex-col gap-4">
@@ -44,7 +50,9 @@ export default function ScheduleConfigForm({
             max="31"
             value={config.workDays}
             onChange={(e) => handleInputChange('workDays', e.target.value)}
-            className="input"
+            className="input validator text-right pr-10"
+            placeholder="1-31"
+            title="Must be between 1 to 31"
             disabled={isLoading}
             required
           />
@@ -64,7 +72,9 @@ export default function ScheduleConfigForm({
             max="31"
             value={config.offDays}
             onChange={(e) => handleInputChange('offDays', e.target.value)}
-            className="input"
+            className="input validator text-right pr-10"
+            placeholder="1-31"
+            title="Must be between 1 to 31"
             disabled={isLoading}
             required
           />
@@ -84,7 +94,9 @@ export default function ScheduleConfigForm({
             max="5"
             value={config.inductionDays}
             onChange={(e) => handleInputChange('inductionDays', e.target.value)}
-            className="input"
+            className="input validator text-right pr-10"
+            placeholder="1-5"
+            title="Must be between 1 to 5"
             disabled={isLoading}
             required
           />
@@ -106,7 +118,9 @@ export default function ScheduleConfigForm({
             onChange={(e) =>
               handleInputChange('drillingDaysRequired', e.target.value)
             }
-            className="input"
+            className="input validator text-right pr-10"
+            placeholder="1-365"
+            title="Must be between 1 to 365"
             disabled={isLoading}
             required
           />

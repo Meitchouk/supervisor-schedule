@@ -14,12 +14,12 @@ function findS3EntryDay(days) {
   return -1;
 }
 
-function findS3DrillingStartDay(days) {
-  for (let i = 0; i < days.length; i++) {
-    if (days[i].s3 === STATE.DRILLING) return i;
-  }
-  return -1;
-}
+// function findS3DrillingStartDay(days) {
+//   for (let i = 0; i < days.length; i++) {
+//     if (days[i].s3 === STATE.DRILLING) return i;
+//   }
+//   return -1;
+// }
 
 /**
  * @param {import('./types').ScheduleResult} scheduleResult
@@ -29,7 +29,7 @@ export function validateSchedule(scheduleResult) {
   const issues = [];
   const { days, supervisors, drillingCountByDay } = scheduleResult;
 
-  console.log('[VALIDATE] Starting validation for', days?.length, 'days');
+  // console.log('[VALIDATE] Starting validation for', days?.length, 'days');
 
   if (!days || days.length === 0) {
     return {
@@ -51,13 +51,13 @@ export function validateSchedule(scheduleResult) {
       : findFirstDrillingDay(drillingCountByDay);
 
   const s3EntryDay = findS3EntryDay(days);
-  const s3DrillingStartDay = findS3DrillingStartDay(days);
+  // const s3DrillingStartDay = findS3DrillingStartDay(days);
 
-  console.log('[VALIDATE] Key days:', {
-    firstDrillingDay,
-    s3EntryDay,
-    s3DrillingStartDay,
-  });
+  // console.log('[VALIDATE] Key days:', {
+  //   firstDrillingDay,
+  //   s3EntryDay,
+  //   s3DrillingStartDay,
+  // });
 
   // Rule 1: NEVER 3 drilling (always)
   const days3Drilling = [];
@@ -74,7 +74,7 @@ export function validateSchedule(scheduleResult) {
   }
 
   if (days3Drilling.length > 0) {
-    console.log('[VALIDATE] Days with 3 drilling:', days3Drilling);
+    // console.log('[VALIDATE] Days with 3 drilling:', days3Drilling);
   } else {
     issues.push({
       severity: 'info',
@@ -283,12 +283,12 @@ export function validateSchedule(scheduleResult) {
 
   const hasErrors = issues.some((issue) => issue.severity === 'error');
 
-  console.log('[VALIDATE] Validation complete:', {
-    totalIssues: issues.length,
-    errors: issues.filter((i) => i.severity === 'error').length,
-    warnings: issues.filter((i) => i.severity === 'warning').length,
-    hasErrors,
-  });
+  // console.log('[VALIDATE] Validation complete:', {
+  //   totalIssues: issues.length,
+  //   errors: issues.filter((i) => i.severity === 'error').length,
+  //   warnings: issues.filter((i) => i.severity === 'warning').length,
+  //   hasErrors,
+  // });
 
   return { issues, hasErrors };
 }
