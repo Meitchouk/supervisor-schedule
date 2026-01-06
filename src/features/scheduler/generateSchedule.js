@@ -37,10 +37,14 @@ function assertConfig({ workDays, offDays, inductionDays }) {
     throw new Error('workDays must be >= 3 for a feasible rotation.');
   }
   if (workDays - inductionDays < 2) {
-    throw new Error('workDays - inductionDays must be >= 2 to avoid 1-day drilling blocks.');
+    throw new Error(
+      'workDays - inductionDays must be >= 2 to avoid 1-day drilling blocks.',
+    );
   }
   if (!canPartitionWorkWindow(workDays, offDays)) {
-    throw new Error('Invalid configuration: cannot partition workDays into valid OFFSITE blocks.');
+    throw new Error(
+      'Invalid configuration: cannot partition workDays into valid OFFSITE blocks.',
+    );
   }
 }
 
@@ -97,7 +101,10 @@ function partitionWorkWindow(workDays, offDays) {
     if (rem === 1) len -= 2;
     if (rem === 2) len -= 1;
 
-    if (len < 3) throw new Error(`Cannot partition workDays=${workDays}, offDays=${offDays}`);
+    if (len < 3)
+      throw new Error(
+        `Cannot partition workDays=${workDays}, offDays=${offDays}`,
+      );
 
     blocks.push(len);
     remaining -= len;
@@ -119,8 +126,8 @@ function computeRotationOffsiteBlocks({ totalDays, workDays, offDays }) {
   let nextDownSupervisor = 'S2';
 
   for (let k = 1; ; k++) {
-    const windowStart = 1 + k * cycleDays;       // first drilling day of S1 in cycle k
-    const windowEnd = workDays + k * cycleDays;  // last drilling day of S1 in cycle k
+    const windowStart = 1 + k * cycleDays; // first drilling day of S1 in cycle k
+    const windowEnd = workDays + k * cycleDays; // last drilling day of S1 in cycle k
 
     if (windowStart >= totalDays) break;
 
@@ -205,11 +212,24 @@ export function generateSchedule(config) {
   const cycleDays = workDays + offDays;
 
   // Small, safe horizon even for 950+ days
-  const totalDays = drillingDaysRequired + cycleDays * 6 + (1 + inductionDays) + 60;
+  const totalDays =
+    drillingDaysRequired + cycleDays * 6 + (1 + inductionDays) + 60;
 
-  console.log('[GENERATE] Config:', { workDays, offDays, inductionDays, drillingDaysRequired, cycleDays, totalDays });
+  console.log('[GENERATE] Config:', {
+    workDays,
+    offDays,
+    inductionDays,
+    drillingDaysRequired,
+    cycleDays,
+    totalDays,
+  });
 
-  const s1Schedule = buildS1Schedule({ totalDays, workDays, offDays, inductionDays });
+  const s1Schedule = buildS1Schedule({
+    totalDays,
+    workDays,
+    offDays,
+    inductionDays,
+  });
   const s2Schedule = new Array(totalDays).fill(STATE.EMPTY);
   const s3Schedule = new Array(totalDays).fill(STATE.EMPTY);
 
@@ -278,8 +298,8 @@ export function generateSchedule(config) {
         finalDayIndex,
         daysWithTwoDrilling,
         firstDrillingDay,
-        days3Drilling: drillingCountByDay.filter(c => c === 3).length,
-        days1Drilling: drillingCountByDay.filter(c => c === 1).length
+        days3Drilling: drillingCountByDay.filter((c) => c === 3).length,
+        days1Drilling: drillingCountByDay.filter((c) => c === 1).length,
       });
 
       return {

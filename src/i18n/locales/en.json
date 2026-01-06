@@ -38,7 +38,14 @@
     "title": "Validation Summary",
     "placeholder": "Validation results will appear here after generating a schedule.",
     "success": "Schedule is valid! All rules are met.",
-    "issuesFound": "Issues Found:"
+    "issuesFound": "Issues Found:",
+    "rules": {
+      "noThreeDrilling": "Never 3 supervisors drilling simultaneously",
+      "alwaysTwoDrilling": "Always exactly 2 supervisors drilling",
+      "noOneDrillingAfterS3": "Never 1 supervisor drilling after S3 enters",
+      "validTransitions": "All state transitions are valid",
+      "totalDrillingDays": "Total days with 2 supervisors drilling: {{count}}"
+    }
   },
   "theme": {
     "light": "light",

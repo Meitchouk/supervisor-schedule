@@ -22,7 +22,9 @@ for (let i = 0; i < Math.min(50, result.days.length); i++) {
   const s3 = day.s3 === 'EMPTY' ? '-' : day.s3[0];
 
   const marker = day.drillingCount !== 2 && i >= 6 ? ' ← PROBLEMA' : '';
-  console.log(` ${i.toString().padStart(2)} |  ${s1} |  ${s2} |  ${s3} |  ${day.drillingCount} |${marker}`);
+  console.log(
+    ` ${i.toString().padStart(2)} |  ${s1} |  ${s2} |  ${s3} |  ${day.drillingCount} |${marker}`,
+  );
 }
 
 console.log(`\nTotal días con 2 perforando: ${result.drillingDaysCompleted}`);

@@ -34,23 +34,32 @@ export function validateSchedule(scheduleResult) {
   if (!days || days.length === 0) {
     return {
       issues: [
-        { severity: 'error', message: 'No schedule generated', code: 'EMPTY_SCHEDULE' },
+        {
+          severity: 'error',
+          message: 'No schedule generated',
+          code: 'EMPTY_SCHEDULE',
+        },
       ],
       hasErrors: true,
     };
   }
 
   const firstDrillingDay =
-    Number.isInteger(scheduleResult.firstDrillingDay) && scheduleResult.firstDrillingDay >= 0
+    Number.isInteger(scheduleResult.firstDrillingDay) &&
+    scheduleResult.firstDrillingDay >= 0
       ? scheduleResult.firstDrillingDay
       : findFirstDrillingDay(drillingCountByDay);
 
   const s3EntryDay = findS3EntryDay(days);
   const s3DrillingStartDay = findS3DrillingStartDay(days);
 
-  console.log('[VALIDATE] Key days:', { firstDrillingDay, s3EntryDay, s3DrillingStartDay });
+  console.log('[VALIDATE] Key days:', {
+    firstDrillingDay,
+    s3EntryDay,
+    s3DrillingStartDay,
+  });
 
-  // Rule: NEVER 3 drilling (always)
+  // Rule 1: NEVER 3 drilling (always)
   const days3Drilling = [];
   for (let i = 0; i < drillingCountByDay.length; i++) {
     if (drillingCountByDay[i] > 2) {
@@ -66,12 +75,20 @@ export function validateSchedule(scheduleResult) {
 
   if (days3Drilling.length > 0) {
     console.log('[VALIDATE] Days with 3 drilling:', days3Drilling);
+  } else {
+    issues.push({
+      severity: 'info',
+      message: 'validation.rules.noThreeDrilling',
+      code: 'RULE_NO_THREE_DRILLING_PASSED',
+    });
   }
 
-  // Rule: Once drilling starts, ALWAYS exactly 2 drilling (best interpretation for scoring)
+  // Rule 2: Once drilling starts, ALWAYS exactly 2 drilling
+  let rule2Violations = 0;
   if (firstDrillingDay >= 0) {
     for (let i = firstDrillingDay; i < drillingCountByDay.length; i++) {
       if (drillingCountByDay[i] !== 2) {
+        rule2Violations++;
         issues.push({
           severity: 'error',
           message: `Day ${i}: ${drillingCountByDay[i]} supervisors drilling (must be exactly 2)`,
@@ -82,10 +99,20 @@ export function validateSchedule(scheduleResult) {
     }
   }
 
-  // Extra doc-specific rule: after S3 entry, never allow only 1 drilling (redundant if NOT_EXACTLY_TWO exists, but useful as explicit evidence)
+  if (rule2Violations === 0) {
+    issues.push({
+      severity: 'info',
+      message: 'validation.rules.alwaysTwoDrilling',
+      code: 'RULE_EXACTLY_TWO_PASSED',
+    });
+  }
+
+  // Rule 3: After S3 entry, never allow only 1 drilling
+  let rule3Violations = 0;
   if (s3EntryDay >= 0) {
     for (let i = s3EntryDay; i < drillingCountByDay.length; i++) {
       if (drillingCountByDay[i] === 1) {
+        rule3Violations++;
         issues.push({
           severity: 'error',
           message: `Day ${i}: Only 1 supervisor drilling after S3 entry`,
@@ -96,7 +123,16 @@ export function validateSchedule(scheduleResult) {
     }
   }
 
+  if (rule3Violations === 0 && s3EntryDay >= 0) {
+    issues.push({
+      severity: 'info',
+      message: 'validation.rules.noOneDrillingAfterS3',
+      code: 'RULE_NO_ONE_DRILLING_AFTER_S3_PASSED',
+    });
+  }
+
   // Transition validation (keep yours + add 2 missing invalid patterns)
+  let transitionViolations = 0;
   ['S1', 'S2', 'S3'].forEach((supId) => {
     const schedule = supervisors[supId];
     if (!Array.isArray(schedule)) return;
@@ -111,6 +147,7 @@ export function validateSchedule(scheduleResult) {
 
       if (current !== STATE.EMPTY) seenNonEmpty = true;
       if (seenNonEmpty && next === STATE.EMPTY) {
+        transitionViolations++;
         issues.push({
           severity: 'error',
           message: `${supId} Day ${i + 1}: Returned to EMPTY after being active`,
@@ -129,6 +166,7 @@ export function validateSchedule(scheduleResult) {
         inInduction = false;
       }
       if (inductionBlocks > 1) {
+        transitionViolations++;
         issues.push({
           severity: 'error',
           message: `${supId} Day ${i}: Induction appears more than once`,
@@ -143,6 +181,7 @@ export function validateSchedule(scheduleResult) {
 
       // Invalid: UP -> UP
       if (current === STATE.UP && next === STATE.UP) {
+        transitionViolations++;
         issues.push({
           severity: 'error',
           message: `${supId} Day ${i}-${i + 1}: Invalid UP -> UP transition`,
@@ -154,6 +193,7 @@ export function validateSchedule(scheduleResult) {
 
       // Invalid: UP -> DOWN (no work)
       if (current === STATE.UP && next === STATE.DOWN) {
+        transitionViolations++;
         issues.push({
           severity: 'error',
           message: `${supId} Day ${i}-${i + 1}: Invalid UP -> DOWN transition (no work)`,
@@ -165,6 +205,7 @@ export function validateSchedule(scheduleResult) {
 
       // Invalid: UP -> REST (missing work)
       if (current === STATE.UP && next === STATE.REST) {
+        transitionViolations++;
         issues.push({
           severity: 'error',
           message: `${supId} Day ${i}-${i + 1}: Invalid UP -> REST transition`,
@@ -176,6 +217,7 @@ export function validateSchedule(scheduleResult) {
 
       // Invalid: DOWN -> UP (no rest)
       if (current === STATE.DOWN && next === STATE.UP) {
+        transitionViolations++;
         issues.push({
           severity: 'error',
           message: `${supId} Day ${i}-${i + 1}: DOWN -> UP without rest days`,
@@ -187,6 +229,7 @@ export function validateSchedule(scheduleResult) {
 
       // Invalid: DOWN -> DRILLING (no rest)
       if (current === STATE.DOWN && next === STATE.DRILLING) {
+        transitionViolations++;
         issues.push({
           severity: 'error',
           message: `${supId} Day ${i}-${i + 1}: DOWN -> DRILLING without rest days`,
@@ -217,6 +260,14 @@ export function validateSchedule(scheduleResult) {
     }
   });
 
+  if (transitionViolations === 0) {
+    issues.push({
+      severity: 'info',
+      message: 'validation.rules.validTransitions',
+      code: 'RULE_VALID_TRANSITIONS_PASSED',
+    });
+  }
+
   // Info: days with exactly 2 drilling
   let totalTwoDrillingDays = 0;
   for (const count of drillingCountByDay) {
@@ -225,17 +276,18 @@ export function validateSchedule(scheduleResult) {
 
   issues.push({
     severity: 'info',
-    message: `Total days with exactly 2 supervisors drilling: ${totalTwoDrillingDays}`,
+    message: 'validation.rules.totalDrillingDays',
     code: 'TWO_DRILLING_DAYS_INFO',
+    count: totalTwoDrillingDays,
   });
 
   const hasErrors = issues.some((issue) => issue.severity === 'error');
 
   console.log('[VALIDATE] Validation complete:', {
     totalIssues: issues.length,
-    errors: issues.filter(i => i.severity === 'error').length,
-    warnings: issues.filter(i => i.severity === 'warning').length,
-    hasErrors
+    errors: issues.filter((i) => i.severity === 'error').length,
+    warnings: issues.filter((i) => i.severity === 'warning').length,
+    hasErrors,
   });
 
   return { issues, hasErrors };

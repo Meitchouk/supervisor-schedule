@@ -36,7 +36,14 @@
     "title": "Resumen de Validación",
     "placeholder": "Los resultados de validación aparecerán aquí después de generar un cronograma.",
     "success": "¡El cronograma es válido! Se cumplen todas las reglas.",
-    "issuesFound": "Problemas Encontrados:"
+    "issuesFound": "Problemas Encontrados:",
+    "rules": {
+      "noThreeDrilling": "Nunca hay 3 supervisores perforando simultáneamente",
+      "alwaysTwoDrilling": "Siempre hay exactamente 2 supervisores perforando",
+      "noOneDrillingAfterS3": "Nunca hay 1 supervisor perforando después de que S3 entra",
+      "validTransitions": "Todas las transiciones de estado son válidas",
+      "totalDrillingDays": "Total de días con 2 supervisores perforando: {{count}}"
+    }
   },
   "theme": {
     "light": "claro",

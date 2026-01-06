@@ -33,7 +33,10 @@ export default function Controls() {
             >
               <Languages size={20} />
             </button>
-            <ul tabIndex={0} className="dropdown-content menu p-2 shadow-lg bg-base-200 rounded-box w-40 mt-2">
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu p-2 shadow-lg bg-base-200 rounded-box w-40 mt-2"
+            >
               <li>
                 <button
                   onClick={() => changeLanguage('en')}
@@ -79,7 +82,10 @@ export default function Controls() {
             >
               <Settings size={20} />
             </button>
-            <ul tabIndex={0} className="dropdown-content menu p-2 shadow-lg bg-base-200 rounded-box w-52 mt-2">
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu p-2 shadow-lg bg-base-200 rounded-box w-52 mt-2"
+            >
               {/* Language Section */}
               <li className="menu-title">
                 <span className="flex items-center gap-2">
