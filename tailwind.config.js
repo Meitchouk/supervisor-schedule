@@ -1,0 +1,76 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,jsx}'],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      animation: {
+        'loading-bar': 'loading-bar 1.5s ease-in-out infinite',
+      },
+      keyframes: {
+        'loading-bar': {
+          '0%': { transform: 'translateX(-100%)', width: '50%' },
+          '50%': { transform: 'translateX(0%)', width: '80%' },
+          '100%': { transform: 'translateX(200%)', width: '50%' },
+        },
+      },
+    },
+  },
+  plugins: [require('daisyui')],
+  daisyui: {
+    themes: [
+      {
+        light: {
+          'primary': '#2563eb',
+          'primary-content': '#ffffff',
+          'secondary': '#7c3aed',
+          'secondary-content': '#ffffff',
+          'accent': '#0891b2',
+          'accent-content': '#ffffff',
+          'neutral': '#1e293b',
+          'neutral-content': '#f8fafc',
+          'base-100': '#fafbfc',
+          'base-200': '#eff3f8',
+          'base-300': '#dde3ec',
+          'base-content': '#0f172a',
+          'info': '#0ea5e9',
+          'info-content': '#ffffff',
+          'success': '#10b981',
+          'success-content': '#ffffff',
+          'warning': '#f59e0b',
+          'warning-content': '#ffffff',
+          'error': '#ef4444',
+          'error-content': '#ffffff',
+        },
+      },
+      {
+        dark: {
+          'primary': '#3b82f6',
+          'primary-content': '#ffffff',
+          'secondary': '#8b5cf6',
+          'secondary-content': '#ffffff',
+          'accent': '#06b6d4',
+          'accent-content': '#ffffff',
+          'neutral': '#1e293b',
+          'neutral-content': '#f1f5f9',
+          'base-100': '#0a0f1e',
+          'base-200': '#1a2332',
+          'base-300': '#2d3748',
+          'base-content': '#e2e8f0',
+          'info': '#0ea5e9',
+          'info-content': '#ffffff',
+          'success': '#10b981',
+          'success-content': '#ffffff',
+          'warning': '#f59e0b',
+          'warning-content': '#ffffff',
+          'error': '#ef4444',
+          'error-content': '#ffffff',
+        },
+      },
+    ],
+    darkTheme: 'dark',
+    base: true,
+    styled: true,
+    utils: true,
+  },
+};

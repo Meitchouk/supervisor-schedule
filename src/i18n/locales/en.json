@@ -1,0 +1,81 @@
+{
+  "documentTitle": "Supervisor Schedule",
+  "header": {
+    "title": "Supervisor Schedule",
+    "subtitle": "Schedule generation and validation tool"
+  },
+  "config": {
+    "title": "Schedule Configuration",
+    "workDays": "Work Days (N)",
+    "workDaysTooltip": "Number of consecutive days a supervisor works in each cycle. Valid range: 1-31 days",
+    "offDays": "Off Days (M)",
+    "offDaysTooltip": "Number of consecutive days off per cycle. Valid range: 1-31 days",
+    "inductionDays": "Induction Days",
+    "inductionDaysTooltip": "Number of days required for new staff induction. Valid range: 1-5 days",
+    "drillingDaysRequired": "Total Drilling Days Required",
+    "drillingDaysRequiredTooltip": "Total number of drilling operations that must be scheduled. Valid range: 1-1000 days",
+    "generateButton": "Generate Schedule",
+    "errors": {
+      "required": "This field is required",
+      "workDaysMin": "Work days must be at least 1",
+      "workDaysMax": "Work days cannot exceed 31",
+      "offDaysMin": "Off days must be at least 1",
+      "offDaysMax": "Off days cannot exceed 31",
+      "inductionDaysMin": "Induction days must be at least 1",
+      "inductionDaysMax": "Induction days cannot exceed 5",
+      "drillingDaysMin": "Drilling days must be at least 1",
+      "drillingDaysMax": "Drilling days cannot exceed 1000",
+      "mustBeInteger": "Must be an integer"
+    }
+  },
+  "schedule": {
+    "title": "Generated Schedule",
+    "noData": "No schedule generated yet. Configure parameters and click 'Generate Schedule'.",
+    "supervisor": "Supervisor",
+    "day": "Day",
+    "drillingCount": "Drilling Count",
+    "legend": "Legend",
+    "empty": "Empty",
+    "emptyHint": "No activity scheduled",
+    "states": {
+      "up": "Travel Up",
+      "induction": "Induction",
+      "drilling": "Drilling",
+      "down": "Travel Down",
+      "rest": "Rest",
+      "empty": "Empty"
+    }
+  },
+  "validation": {
+    "title": "Validation Summary",
+    "placeholder": "Validation results will appear here after generating a schedule.",
+    "success": "Schedule is valid! All rules are met.",
+    "issuesFound": "Issues Found:",
+    "rules": {
+      "noThreeDrilling": "Never 3 supervisors drilling simultaneously",
+      "alwaysTwoDrilling": "Always exactly 2 supervisors drilling",
+      "noOneDrillingAfterS3": "Never 1 supervisor drilling after S3 enters",
+      "validTransitions": "All state transitions are valid",
+      "totalDrillingDays": "Total days with 2 supervisors drilling: {{count}}"
+    }
+  },
+  "theme": {
+    "light": "light",
+    "dark": "dark",
+    "system": "system"
+  },
+  "language": "Language",
+  "controls": {
+    "language": "Language",
+    "theme": "Theme",
+    "settings": "Settings",
+    "selectLanguage": "Select language",
+    "toggleTheme": "Switch to {{mode}} mode",
+    "languageTooltip": "Switch the interface language between Spanish and English",
+    "themeTooltip": "Switch the visual theme between light and dark mode",
+    "languages": {
+      "english": "English",
+      "spanish": "Español"
+    }
+  }
+}
