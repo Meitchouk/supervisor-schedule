@@ -23,7 +23,7 @@ export default function PresetsSelector({ currentConfig, onLoadPreset }) {
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3" data-tour="presets">
       <div className="flex items-center gap-2 text-sm font-semibold">
         <Zap size={16} />
         <span>{t('presets.title')}</span>

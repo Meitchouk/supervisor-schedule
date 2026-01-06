@@ -81,8 +81,7 @@ export default function ComparisonView() {
             else if (state === 'DRILLING') {
               drillingDays++;
               supervisorStats[supervisor].drilling++;
-            }
-            else if (state === 'UP') upDays++;
+            } else if (state === 'UP') upDays++;
             else if (state === 'DOWN') downDays++;
           } else if (state === 'REST') {
             offDays++;
@@ -145,7 +144,9 @@ export default function ComparisonView() {
       field: t('stats.utilizationRate'),
       current: `${currentStats.utilizationRate}%`,
       comparison: `${comparisonStats.utilizationRate}%`,
-      diff: (comparisonStats.utilizationRate - currentStats.utilizationRate).toFixed(1),
+      diff: (
+        comparisonStats.utilizationRate - currentStats.utilizationRate
+      ).toFixed(1),
       unit: '%',
       isPercentage: true,
     });
@@ -155,7 +156,9 @@ export default function ComparisonView() {
       field: t('stats.drillingEfficiency'),
       current: `${currentStats.drillingEfficiency}%`,
       comparison: `${comparisonStats.drillingEfficiency}%`,
-      diff: (comparisonStats.drillingEfficiency - currentStats.drillingEfficiency).toFixed(1),
+      diff: (
+        comparisonStats.drillingEfficiency - currentStats.drillingEfficiency
+      ).toFixed(1),
       unit: '%',
       isPercentage: true,
     });
@@ -180,7 +183,8 @@ export default function ComparisonView() {
 
     // Travel Days (Up + Down)
     const currentTravelDays = currentStats.upDays + currentStats.downDays;
-    const comparisonTravelDays = comparisonStats.upDays + comparisonStats.downDays;
+    const comparisonTravelDays =
+      comparisonStats.upDays + comparisonStats.downDays;
     diffs.push({
       field: t('comparison.travelDays'),
       current: currentTravelDays,
@@ -260,7 +264,10 @@ export default function ComparisonView() {
             {currentResult && (
               <div className="card bg-base-100 shadow-xl">
                 <div className="card-body">
-                  <ScheduleGrid scheduleResult={currentResult} config={currentConfig} />
+                  <ScheduleGrid
+                    scheduleResult={currentResult}
+                    config={currentConfig}
+                  />
                   <Legend />
                 </div>
               </div>
@@ -280,7 +287,10 @@ export default function ComparisonView() {
             {comparisonResult && (
               <div className="card bg-base-100 shadow-xl">
                 <div className="card-body">
-                  <ScheduleGrid scheduleResult={comparisonResult} config={comparisonConfig} />
+                  <ScheduleGrid
+                    scheduleResult={comparisonResult}
+                    config={comparisonConfig}
+                  />
                   <Legend />
                 </div>
               </div>
@@ -296,7 +306,9 @@ export default function ComparisonView() {
 
               {/* General Metrics */}
               <div className="mb-4">
-                <h4 className="font-semibold text-sm mb-2">{t('comparison.generalMetrics')}</h4>
+                <h4 className="font-semibold text-sm mb-2">
+                  {t('comparison.generalMetrics')}
+                </h4>
                 <div className="overflow-x-auto">
                   <table className="table table-sm">
                     <thead>
@@ -308,26 +320,39 @@ export default function ComparisonView() {
                       </tr>
                     </thead>
                     <tbody>
-                      {differences.filter(d => !d.category).map((diff, index) => (
-                        <tr key={index}>
-                          <td>{diff.field}</td>
-                          <td className="font-mono">{diff.current}</td>
-                          <td className="font-mono">{diff.comparison}</td>
-                          <td
-                            className={`font-mono font-semibold ${
-                              diff.isPercentage || diff.field === t('stats.drillingEfficiency') || diff.field === t('stats.utilizationRate')
-                                ? parseFloat(diff.diff) > 0 ? 'text-success' : 'text-error'
-                                : diff.field === t('stats.totalDays') || diff.field === t('comparison.travelDays')
-                                ? parseFloat(diff.diff) < 0 ? 'text-success' : 'text-error'
-                                : parseFloat(diff.diff) > 0 ? 'text-success' : 'text-error'
-                            }`}
-                          >
-                            {parseFloat(diff.diff) > 0 ? '+' : ''}
-                            {diff.diff}
-                            {diff.unit && !diff.isPercentage ? ` ${diff.unit}` : ''}
-                          </td>
-                        </tr>
-                      ))}
+                      {differences
+                        .filter((d) => !d.category)
+                        .map((diff, index) => (
+                          <tr key={index}>
+                            <td>{diff.field}</td>
+                            <td className="font-mono">{diff.current}</td>
+                            <td className="font-mono">{diff.comparison}</td>
+                            <td
+                              className={`font-mono font-semibold ${
+                                diff.isPercentage ||
+                                diff.field === t('stats.drillingEfficiency') ||
+                                diff.field === t('stats.utilizationRate')
+                                  ? parseFloat(diff.diff) > 0
+                                    ? 'text-success'
+                                    : 'text-error'
+                                  : diff.field === t('stats.totalDays') ||
+                                      diff.field === t('comparison.travelDays')
+                                    ? parseFloat(diff.diff) < 0
+                                      ? 'text-success'
+                                      : 'text-error'
+                                    : parseFloat(diff.diff) > 0
+                                      ? 'text-success'
+                                      : 'text-error'
+                              }`}
+                            >
+                              {parseFloat(diff.diff) > 0 ? '+' : ''}
+                              {diff.diff}
+                              {diff.unit && !diff.isPercentage
+                                ? ` ${diff.unit}`
+                                : ''}
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>
@@ -335,7 +360,9 @@ export default function ComparisonView() {
 
               {/* Per-Supervisor Metrics */}
               <div>
-                <h4 className="font-semibold text-sm mb-2">{t('comparison.supervisorMetrics')}</h4>
+                <h4 className="font-semibold text-sm mb-2">
+                  {t('comparison.supervisorMetrics')}
+                </h4>
                 <div className="overflow-x-auto">
                   <table className="table table-sm">
                     <thead>
@@ -347,26 +374,35 @@ export default function ComparisonView() {
                       </tr>
                     </thead>
                     <tbody>
-                      {differences.filter(d => d.category === 'supervisor').map((diff, index) => (
-                        <tr key={index}>
-                          <td className="text-sm">{diff.field}</td>
-                          <td className="font-mono">{diff.current}</td>
-                          <td className="font-mono">{diff.comparison}</td>
-                          <td
-                            className={`font-mono font-semibold ${
-                              parseFloat(diff.diff) === 0
-                                ? 'text-base-content/50'
-                                : diff.field.includes(t('stats.workDays')) || diff.field.includes(t('comparison.drillingDays'))
-                                ? parseFloat(diff.diff) > 0 ? 'text-success' : 'text-error'
-                                : parseFloat(diff.diff) < 0 ? 'text-success' : 'text-error'
-                            }`}
-                          >
-                            {parseFloat(diff.diff) > 0 ? '+' : ''}
-                            {diff.diff}
-                            {diff.unit ? ` ${diff.unit}` : ''}
-                          </td>
-                        </tr>
-                      ))}
+                      {differences
+                        .filter((d) => d.category === 'supervisor')
+                        .map((diff, index) => (
+                          <tr key={index}>
+                            <td className="text-sm">{diff.field}</td>
+                            <td className="font-mono">{diff.current}</td>
+                            <td className="font-mono">{diff.comparison}</td>
+                            <td
+                              className={`font-mono font-semibold ${
+                                parseFloat(diff.diff) === 0
+                                  ? 'text-base-content/50'
+                                  : diff.field.includes(t('stats.workDays')) ||
+                                      diff.field.includes(
+                                        t('comparison.drillingDays'),
+                                      )
+                                    ? parseFloat(diff.diff) > 0
+                                      ? 'text-success'
+                                      : 'text-error'
+                                    : parseFloat(diff.diff) < 0
+                                      ? 'text-success'
+                                      : 'text-error'
+                              }`}
+                            >
+                              {parseFloat(diff.diff) > 0 ? '+' : ''}
+                              {diff.diff}
+                              {diff.unit ? ` ${diff.unit}` : ''}
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>

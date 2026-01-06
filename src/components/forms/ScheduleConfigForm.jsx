@@ -90,6 +90,7 @@ export default function ScheduleConfigForm({
     <form
       className="card bg-base-100 shadow-xl w-full"
       onSubmit={handleSubmit(onSubmit)}
+      data-tour="config-form"
     >
       <div className="card-body flex flex-col gap-4">
         <h2 className="card-title font-bold">{t('config.title')}</h2>
@@ -217,6 +218,7 @@ export default function ScheduleConfigForm({
             type="submit"
             className="btn btn-primary w-auto px-5"
             disabled={isLoading || !isValid}
+            data-tour="generate-button"
           >
             {isLoading ? (
               <span className="loading loading-spinner loading-sm" />

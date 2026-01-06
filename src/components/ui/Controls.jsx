@@ -1,6 +1,13 @@
 import { useTranslation } from 'react-i18next';
 
-import { Sun, Moon, Languages, Settings, GitCompare } from 'lucide-react';
+import {
+  Sun,
+  Moon,
+  Languages,
+  Settings,
+  GitCompare,
+  HelpCircle,
+} from 'lucide-react';
 import { clsx } from 'clsx';
 import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
@@ -21,7 +28,7 @@ export default function Controls() {
   const { isComparisonMode, toggleComparisonMode } = useComparison();
 
   return (
-    <div className="fixed top-4 right-4 z-50">
+    <div className="fixed top-4 right-4 z-50" data-tour="controls">
       {/* Desktop: Three separate buttons */}
       <div className="hidden md:flex gap-2">
         {/* Comparison Toggle */}
@@ -98,6 +105,27 @@ export default function Controls() {
             disabled={isLoading}
           >
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+        </div>
+
+        {/* Repeat Tour Button */}
+        <div
+          className="tooltip tooltip-left"
+          data-tip={t('tour.buttons.repeatTour')}
+        >
+          <button
+            type="button"
+            onClick={() => {
+              if (window.startAppTour) {
+                window.startAppTour();
+              }
+            }}
+            className="btn btn-ghost btn-sm btn-circle"
+            aria-label={t('tour.buttons.repeatTour')}
+            disabled={isLoading}
+            data-tour="repeat-tour-button"
+          >
+            <HelpCircle size={20} />
           </button>
         </div>
       </div>
@@ -200,6 +228,26 @@ export default function Controls() {
                 />
                 <Sun size={16} />
               </label>
+            </div>
+
+            <div className="divider my-2"></div>
+
+            {/* Repeat Tour Button */}
+            <div>
+              <button
+                type="button"
+                onClick={() => {
+                  if (window.startAppTour) {
+                    window.startAppTour();
+                  }
+                }}
+                className="btn btn-sm btn-outline w-full gap-2"
+                disabled={isLoading}
+                data-tour="repeat-tour-button"
+              >
+                <HelpCircle size={16} />
+                {t('tour.buttons.repeatTour')}
+              </button>
             </div>
           </div>
         </div>

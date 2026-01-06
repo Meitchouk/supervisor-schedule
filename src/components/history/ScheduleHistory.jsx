@@ -152,7 +152,7 @@ export default function ScheduleHistory() {
 
   return (
     <>
-      <div className="card bg-base-100 shadow-xl">
+      <div className="card bg-base-100 shadow-xl" data-tour="history">
         <div className="card-body">
           {/* Header */}
           <div className="flex items-center justify-between mb-4">

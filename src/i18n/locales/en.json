@@ -176,5 +176,62 @@
     "travelDays": "Travel Days (Up + Down)",
     "generalMetrics": "General Metrics",
     "supervisorMetrics": "Per-Supervisor Metrics"
+  },
+  "tour": {
+    "welcome": {
+      "title": "Welcome to Supervisor Schedule!",
+      "description": "This tool helps you generate and validate rotation schedules for drilling supervisors. Let's take a quick tour."
+    },
+    "presets": {
+      "title": "Predefined Configurations",
+      "description": "Use these buttons to load common configurations. Each preset has optimized values for different work regimes.",
+      "descriptionNoData": "Click on any of these presets to load a predefined configuration and generate an example schedule. We recommend starting with the 14x7 Regime."
+    },
+    "configForm": {
+      "title": "Schedule Configuration",
+      "description": "Here you define the key parameters: work days, off days, induction days, and required drilling days. All fields are automatically validated."
+    },
+    "generateButton": {
+      "title": "Generate Schedule",
+      "description": "Once parameters are configured, press this button to generate the schedule. The system will automatically optimize the supervisor rotation.",
+      "descriptionNoData": "Press this button to generate your first schedule. You can use a preset or configure the values manually."
+    },
+    "validation": {
+      "title": "Validation Summary",
+      "description": "Here you'll see if the schedule meets all requirements. Warnings or errors are shown if something needs adjustment."
+    },
+    "scheduleGrid": {
+      "title": "Generated Schedule",
+      "description": "This table shows the daily rotation of the three supervisors (S1, S2, S3) and the drilling day counter. You can export to PDF, Excel, or CSV."
+    },
+    "stats": {
+      "title": "Schedule Statistics",
+      "description": "Expand this section to see detailed charts and metrics: utilization rate, drilling efficiency, and day distribution per supervisor."
+    },
+    "history": {
+      "title": "Schedule History",
+      "description": "All generated schedules are temporarily saved here. You can reload them or export them later.",
+      "descriptionNoData": "Once you generate schedules, they will appear saved here. This allows you to review and compare different configurations."
+    },
+    "controls": {
+      "title": "App Controls",
+      "description": "Here you can enable comparison mode to view two configurations side by side, change language, and toggle between light/dark theme."
+    },
+    "finish": {
+      "title": "All set!",
+      "description": "You now know the main features. You can repeat this tour anytime from the settings menu. Let's get to work!",
+      "descriptionNoData": "You now know the basic interface. Now click on a preset and generate your first schedule to explore all features. You can repeat this tour anytime."
+    },
+    "hint": {
+      "title": "New components available!",
+      "description": "The schedule has been generated. You can now see the validation, complete schedule, and statistics. Click this button to continue the tour from where you left off."
+    },
+    "buttons": {
+      "next": "Next",
+      "previous": "Previous",
+      "done": "Finish",
+      "progress": "{{current}} of {{total}}",
+      "repeatTour": "Repeat Tour"
+    }
   }
 }

@@ -20,6 +20,7 @@
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "clsx": "^2.0.0",
+    "driver.js": "^1.4.0",
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
     "i18next": "^23.7.0",

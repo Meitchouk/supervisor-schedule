@@ -61,7 +61,10 @@ export default function Body() {
                   </>
                 ) : scheduleResult ? (
                   <>
-                    <ScheduleGrid scheduleResult={scheduleResult} config={config} />
+                    <ScheduleGrid
+                      scheduleResult={scheduleResult}
+                      config={config}
+                    />
                     <Legend />
                   </>
                 ) : (

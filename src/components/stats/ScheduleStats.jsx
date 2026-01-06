@@ -118,7 +118,7 @@ export default function ScheduleStats({ scheduleResult }) {
   ).toFixed(1);
 
   return (
-    <div className="card bg-base-100 shadow-xl">
+    <div className="card bg-base-100 shadow-xl" data-tour="stats">
       <div className="card-body">
         {/* Header with toggle */}
         <div className="flex items-center justify-between">
