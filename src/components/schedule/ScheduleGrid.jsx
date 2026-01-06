@@ -114,32 +114,6 @@ export default function ScheduleGrid({ scheduleResult }) {
             </tbody>
           </table>
         </div>
-
-        {/* Legend */}
-        <div className="mt-4">
-          <h3 className="font-semibold mb-2">{t('schedule.legend')}</h3>
-          <div className="flex flex-wrap gap-2">
-            <span className="badge badge-info badge-sm">
-              [ {STATE_TO_LABEL['UP']} ] - {t('schedule.states.up')}
-            </span>
-            <span className="badge badge-warning badge-sm">
-              [ {STATE_TO_LABEL['INDUCTION']} ] -{' '}
-              {t('schedule.states.induction')}
-            </span>
-            <span className="badge badge-success badge-sm">
-              [ {STATE_TO_LABEL['DRILLING']} ] - {t('schedule.states.drilling')}
-            </span>
-            <span className="badge badge-error badge-sm">
-              [ {STATE_TO_LABEL['DOWN']} ] - {t('schedule.states.down')}
-            </span>
-            <span className="badge badge-ghost badge-sm">
-              [ {STATE_TO_LABEL['REST']} ] - {t('schedule.states.rest')}
-            </span>
-            <span className="badge badge-outline badge-sm">
-              [ {STATE_TO_LABEL['EMPTY']} ] - {t('schedule.states.empty')}
-            </span>
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -1,4 +1,7 @@
 import { useTranslation } from 'react-i18next';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { InfoTooltip } from '../../components/ui';
 import { useLoading } from '../../context/LoadingContext';
 
@@ -15,23 +18,76 @@ export default function ScheduleConfigForm({
   const { t } = useTranslation();
   const { isLoading } = useLoading();
 
+  // Zod validation schema
+  const schema = z.object({
+    workDays: z
+      .number({
+        required_error: t('config.errors.required'),
+        invalid_type_error: t('config.errors.mustBeInteger'),
+      })
+      .int(t('config.errors.mustBeInteger'))
+      .min(1, t('config.errors.workDaysMin'))
+      .max(31, t('config.errors.workDaysMax')),
+    offDays: z
+      .number({
+        required_error: t('config.errors.required'),
+        invalid_type_error: t('config.errors.mustBeInteger'),
+      })
+      .int(t('config.errors.mustBeInteger'))
+      .min(1, t('config.errors.offDaysMin'))
+      .max(31, t('config.errors.offDaysMax')),
+    inductionDays: z
+      .number({
+        required_error: t('config.errors.required'),
+        invalid_type_error: t('config.errors.mustBeInteger'),
+      })
+      .int(t('config.errors.mustBeInteger'))
+      .min(1, t('config.errors.inductionDaysMin'))
+      .max(5, t('config.errors.inductionDaysMax')),
+    drillingDaysRequired: z
+      .number({
+        required_error: t('config.errors.required'),
+        invalid_type_error: t('config.errors.mustBeInteger'),
+      })
+      .int(t('config.errors.mustBeInteger'))
+      .min(1, t('config.errors.drillingDaysMin'))
+      .max(1000, t('config.errors.drillingDaysMax')),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    setValue,
+  } = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: config,
+    mode: 'onChange',
+  });
+
   const handleInputChange = (field, value) => {
     // Allow empty string for manual editing
     if (value === '') {
+      setValue(field, undefined, { shouldValidate: false });
       onConfigChange(field, '');
       return;
     }
 
     const numValue = parseInt(value, 10);
     if (!Number.isNaN(numValue)) {
+      setValue(field, numValue, { shouldValidate: true });
       onConfigChange(field, numValue);
     }
+  };
+
+  const onSubmit = () => {
+    onGenerateSchedule();
   };
 
   return (
     <form
       className="card bg-base-100 shadow-xl w-full"
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <div className="card-body flex flex-col gap-4">
         <h2 className="card-title font-bold">{t('config.title')}</h2>
@@ -48,14 +104,21 @@ export default function ScheduleConfigForm({
             type="number"
             min="1"
             max="31"
+            {...register('workDays', { valueAsNumber: true })}
             value={config.workDays}
             onChange={(e) => handleInputChange('workDays', e.target.value)}
-            className="input validator text-right pr-10"
+            className={`input validator text-right pr-10 w-full ${
+              errors.workDays ? 'input-error' : ''
+            }`}
             placeholder="1-31"
             title="Must be between 1 to 31"
             disabled={isLoading}
-            required
           />
+          {errors.workDays && (
+            <p className="validator-hint text-error text-sm mt-1">
+              {errors.workDays.message}
+            </p>
+          )}
         </fieldset>
 
         {/* MARK: Off Days */}
@@ -70,14 +133,21 @@ export default function ScheduleConfigForm({
             type="number"
             min="1"
             max="31"
+            {...register('offDays', { valueAsNumber: true })}
             value={config.offDays}
             onChange={(e) => handleInputChange('offDays', e.target.value)}
-            className="input validator text-right pr-10"
+            className={`input validator text-right pr-10 w-full ${
+              errors.offDays ? 'input-error' : ''
+            }`}
             placeholder="1-31"
             title="Must be between 1 to 31"
             disabled={isLoading}
-            required
           />
+          {errors.offDays && (
+            <p className="validator-hint text-error text-sm mt-1">
+              {errors.offDays.message}
+            </p>
+          )}
         </fieldset>
 
         {/* MARK: Induction Days */}
@@ -92,14 +162,21 @@ export default function ScheduleConfigForm({
             type="number"
             min="1"
             max="5"
+            {...register('inductionDays', { valueAsNumber: true })}
             value={config.inductionDays}
             onChange={(e) => handleInputChange('inductionDays', e.target.value)}
-            className="input validator text-right pr-10"
+            className={`input validator text-right pr-10 w-full ${
+              errors.inductionDays ? 'input-error' : ''
+            }`}
             placeholder="1-5"
             title="Must be between 1 to 5"
             disabled={isLoading}
-            required
           />
+          {errors.inductionDays && (
+            <p className="validator-hint text-error text-sm mt-1">
+              {errors.inductionDays.message}
+            </p>
+          )}
         </fieldset>
 
         {/* MARK: Drilling Days Required */}
@@ -113,26 +190,32 @@ export default function ScheduleConfigForm({
             id="drillingDaysRequired"
             type="number"
             min="1"
-            max="365"
+            max="1000"
+            {...register('drillingDaysRequired', { valueAsNumber: true })}
             value={config.drillingDaysRequired}
             onChange={(e) =>
               handleInputChange('drillingDaysRequired', e.target.value)
             }
-            className="input validator text-right pr-10"
-            placeholder="1-365"
-            title="Must be between 1 to 365"
+            className={`input validator text-right pr-10 w-full ${
+              errors.drillingDaysRequired ? 'input-error' : ''
+            }`}
+            placeholder="1-1000"
+            title="Must be between 1 to 1000"
             disabled={isLoading}
-            required
           />
+          {errors.drillingDaysRequired && (
+            <p className="validator-hint text-error text-sm mt-1">
+              {errors.drillingDaysRequired.message}
+            </p>
+          )}
         </fieldset>
 
         {/* MARK: Generate Schedule Button */}
         <div className="card-actions align-middle mt-auto flex justify-center">
           <button
-            type="button"
-            onClick={onGenerateSchedule}
+            type="submit"
             className="btn btn-primary w-auto px-5"
-            disabled={isLoading}
+            disabled={isLoading || !isValid}
           >
             {isLoading ? (
               <span className="loading loading-spinner loading-sm" />

@@ -7,14 +7,26 @@
   "config": {
     "title": "Configuración del Cronograma",
     "workDays": "Días de Trabajo (N)",
-    "workDaysTooltip": "Número de días consecutivos que un supervisor trabaja en cada ciclo",
+    "workDaysTooltip": "Número de días consecutivos que un supervisor trabaja en cada ciclo. Rango válido: 1-31 días",
     "offDays": "Días Libres (M)",
-    "offDaysTooltip": "Número de días consecutivos libres por ciclo",
+    "offDaysTooltip": "Número de días consecutivos libres por ciclo. Rango válido: 1-31 días",
     "inductionDays": "Días de Inducción",
-    "inductionDaysTooltip": "Número de días requeridos para inducción del personal nuevo (1–5 días)",
+    "inductionDaysTooltip": "Número de días requeridos para inducción del personal nuevo. Rango válido: 1-5 días",
     "drillingDaysRequired": "Total de Días de Perforación Requeridos",
-    "drillingDaysRequiredTooltip": "Número total de operaciones de perforación que deben ser programadas",
-    "generateButton": "Generar Cronograma"
+    "drillingDaysRequiredTooltip": "Número total de operaciones de perforación que deben ser programadas. Rango válido: 1-1000 días",
+    "generateButton": "Generar Cronograma",
+    "errors": {
+      "required": "Este campo es requerido",
+      "workDaysMin": "Los días de trabajo deben ser al menos 1",
+      "workDaysMax": "Los días de trabajo no pueden exceder 31",
+      "offDaysMin": "Los días libres deben ser al menos 1",
+      "offDaysMax": "Los días libres no pueden exceder 31",
+      "inductionDaysMin": "Los días de inducción deben ser al menos 1",
+      "inductionDaysMax": "Los días de inducción no pueden exceder 5",
+      "drillingDaysMin": "Los días de perforación deben ser al menos 1",
+      "drillingDaysMax": "Los días de perforación no pueden exceder 1000",
+      "mustBeInteger": "Debe ser un número entero"
+    }
   },
   "schedule": {
     "title": "Cronograma Generado",
@@ -54,8 +66,11 @@
   "controls": {
     "language": "Idioma",
     "theme": "Tema",
+    "settings": "Ajustes",
     "selectLanguage": "Seleccionar idioma",
     "toggleTheme": "Cambiar a modo {{mode}}",
+    "languageTooltip": "Cambia el idioma de la interfaz entre Español e Inglés",
+    "themeTooltip": "Cambia el tema visual entre modo claro y oscuro",
     "languages": {
       "english": "English",
       "spanish": "Español"

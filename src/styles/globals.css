@@ -92,6 +92,31 @@
     -moz-appearance: textfield;
     appearance: textfield;
   }
+
+  /* Tooltip z-index to prevent clipping */
+  .tooltip:before,
+  .tooltip:after {
+    z-index: 9999 !important;
+    position: fixed !important;
+  }
+
+  /* Tooltip text wrapping and max-width */
+  .tooltip:before {
+    max-width: 300px;
+    white-space: normal;
+    word-wrap: break-word;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  /* Prevent tooltip clipping in forms */
+  .card-body {
+    overflow: visible;
+  }
+
+  fieldset.fieldset {
+    overflow: visible;
+  }
 }
 
 @layer utilities {

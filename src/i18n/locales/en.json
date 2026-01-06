@@ -7,14 +7,26 @@
   "config": {
     "title": "Schedule Configuration",
     "workDays": "Work Days (N)",
-    "workDaysTooltip": "Number of consecutive days a supervisor works in each cycle",
+    "workDaysTooltip": "Number of consecutive days a supervisor works in each cycle. Valid range: 1-31 days",
     "offDays": "Off Days (M)",
-    "offDaysTooltip": "Number of consecutive days off per cycle",
+    "offDaysTooltip": "Number of consecutive days off per cycle. Valid range: 1-31 days",
     "inductionDays": "Induction Days",
-    "inductionDaysTooltip": "Number of days required for new staff induction (1–5 days)",
+    "inductionDaysTooltip": "Number of days required for new staff induction. Valid range: 1-5 days",
     "drillingDaysRequired": "Total Drilling Days Required",
-    "drillingDaysRequiredTooltip": "Total number of drilling operations that must be scheduled",
-    "generateButton": "Generate Schedule"
+    "drillingDaysRequiredTooltip": "Total number of drilling operations that must be scheduled. Valid range: 1-1000 days",
+    "generateButton": "Generate Schedule",
+    "errors": {
+      "required": "This field is required",
+      "workDaysMin": "Work days must be at least 1",
+      "workDaysMax": "Work days cannot exceed 31",
+      "offDaysMin": "Off days must be at least 1",
+      "offDaysMax": "Off days cannot exceed 31",
+      "inductionDaysMin": "Induction days must be at least 1",
+      "inductionDaysMax": "Induction days cannot exceed 5",
+      "drillingDaysMin": "Drilling days must be at least 1",
+      "drillingDaysMax": "Drilling days cannot exceed 1000",
+      "mustBeInteger": "Must be an integer"
+    }
   },
   "schedule": {
     "title": "Generated Schedule",
@@ -56,8 +68,11 @@
   "controls": {
     "language": "Language",
     "theme": "Theme",
+    "settings": "Settings",
     "selectLanguage": "Select language",
     "toggleTheme": "Switch to {{mode}} mode",
+    "languageTooltip": "Switch the interface language between Spanish and English",
+    "themeTooltip": "Switch the visual theme between light and dark mode",
     "languages": {
       "english": "English",
       "spanish": "Español"
