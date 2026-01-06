@@ -117,6 +117,59 @@
   fieldset.fieldset {
     overflow: visible;
   }
+
+  /* Driver.js Custom Styles */
+  .driver-popover {
+    @apply bg-base-100 text-base-content shadow-2xl rounded-box;
+    max-width: 400px;
+  }
+
+  .driver-popover-title {
+    @apply text-lg font-bold text-base-content;
+  }
+
+  .driver-popover-description {
+    @apply text-base-content/80 text-sm;
+  }
+
+  .driver-popover-progress-text {
+    @apply text-base-content/60 text-xs;
+  }
+
+  .driver-popover-footer {
+    @apply flex gap-2 justify-end;
+  }
+
+  .driver-popover-navigation-btns button {
+    @apply btn btn-sm;
+  }
+
+  .driver-popover-next-btn {
+    @apply btn-primary;
+  }
+
+  .driver-popover-prev-btn {
+    @apply btn-ghost;
+  }
+
+  .driver-popover-close-btn {
+    @apply btn-ghost btn-sm btn-circle absolute top-2 right-2;
+  }
+
+  .driver-active-element {
+    @apply z-[9999];
+  }
+
+  .driver-overlay {
+    @apply bg-black/60;
+  }
+
+  /* Mobile responsive adjustments for driver.js */
+  @media (max-width: 768px) {
+    .driver-popover {
+      max-width: 90vw;
+    }
+  }
 }
 
 @layer utilities {

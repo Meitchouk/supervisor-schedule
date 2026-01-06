@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { InfoTooltip } from '../../components/ui';
+import { PresetsSelector } from '../../components/presets';
 import { useLoading } from '../../context/LoadingContext';
 
 export default function ScheduleConfigForm({
@@ -77,13 +78,30 @@ export default function ScheduleConfigForm({
     onGenerateSchedule();
   };
 
+  const handleLoadPreset = (presetConfig) => {
+    // Load all values from preset
+    Object.keys(presetConfig).forEach((key) => {
+      setValue(key, presetConfig[key], { shouldValidate: true });
+      onConfigChange(key, presetConfig[key]);
+    });
+  };
+
   return (
     <form
       className="card bg-base-100 shadow-xl w-full"
       onSubmit={handleSubmit(onSubmit)}
+      data-tour="config-form"
     >
       <div className="card-body flex flex-col gap-4">
         <h2 className="card-title font-bold">{t('config.title')}</h2>
+
+        {/* Presets Selector */}
+        <PresetsSelector
+          currentConfig={config}
+          onLoadPreset={handleLoadPreset}
+        />
+
+        <div className="divider my-1"></div>
 
         <fieldset className="fieldset w-full">
           <legend className="fieldset-legend">
@@ -107,9 +125,7 @@ export default function ScheduleConfigForm({
             disabled={isLoading}
           />
           {errors.workDays && (
-            <p className="text-error text-sm mt-1">
-              {errors.workDays.message}
-            </p>
+            <p className="text-error text-sm mt-1">{errors.workDays.message}</p>
           )}
         </fieldset>
 
@@ -135,9 +151,7 @@ export default function ScheduleConfigForm({
             disabled={isLoading}
           />
           {errors.offDays && (
-            <p className="text-error text-sm mt-1">
-              {errors.offDays.message}
-            </p>
+            <p className="text-error text-sm mt-1">{errors.offDays.message}</p>
           )}
         </fieldset>
 
@@ -204,6 +218,7 @@ export default function ScheduleConfigForm({
             type="submit"
             className="btn btn-primary w-auto px-5"
             disabled={isLoading || !isValid}
+            data-tour="generate-button"
           >
             {isLoading ? (
               <span className="loading loading-spinner loading-sm" />

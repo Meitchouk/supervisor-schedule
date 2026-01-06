@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import { useLoading } from './LoadingContext';
+import { useScheduleHistory } from './ScheduleHistoryContext';
 import { generateSchedule } from '../features/scheduler/generateSchedule';
 import { validateSchedule } from '../features/scheduler/validateSchedule';
 
@@ -11,6 +12,7 @@ const ScheduleContext = createContext(null);
  */
 export function ScheduleProvider({ children }) {
   const { startLoading, stopLoading } = useLoading();
+  const { addToHistory } = useScheduleHistory();
   const [config, setConfig] = useState({
     workDays: 14,
     offDays: 7,
@@ -47,6 +49,9 @@ export function ScheduleProvider({ children }) {
       };
 
       setScheduleResult(finalResult);
+
+      // Add to history
+      addToHistory(config, finalResult);
 
       // console.log('Schedule generated:', finalResult);
     } finally {
