@@ -1,13 +1,18 @@
 import { Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-export default function InfoTooltip({ tooltipKey, children, position = 'right', icon = true }) {
+export default function InfoTooltip({
+  tooltipKey,
+  children,
+  position = 'right',
+  icon = true,
+}) {
   const { t } = useTranslation();
   const tooltipText = t(tooltipKey);
-  
+
   const validPositions = ['left', 'top', 'bottom', 'right'];
   const safePosition = validPositions.includes(position) ? position : 'right';
-  
+
   const tooltipPositionClass = `tooltip-${safePosition}`;
 
   return (

@@ -75,5 +75,161 @@
       "english": "English",
       "spanish": "Español"
     }
+  },
+  "export": {
+    "button": "Exportar",
+    "success": "Archivo exportado exitosamente",
+    "error": "Error al exportar. Por favor, inténtelo de nuevo.",
+    "formats": {
+      "pdf": "Exportar como PDF",
+      "csv": "Exportar como CSV",
+      "excel": "Exportar como Excel"
+    },
+    "pdf": {
+      "title": "Cronograma de Supervisores",
+      "workDays": "Días de Trabajo",
+      "offDays": "Días Libres",
+      "inductionDays": "Días de Inducción",
+      "drillingDaysRequired": "Días de Perforación Requeridos",
+      "days": "Días",
+      "page": "Página",
+      "of": "de",
+      "continued": "(continuación)",
+      "legend": "Leyenda",
+      "states": {
+        "up": "Subida",
+        "induction": "Inducción",
+        "drilling": "Perforación",
+        "down": "Bajada",
+        "rest": "Descanso",
+        "empty": "Vacío"
+      }
+    },
+    "excel": {
+      "scheduleSheet": "Cronograma",
+      "configSheet": "Configuración y Leyenda",
+      "configuration": "Configuración",
+      "value": "Valor",
+      "legend": "Leyenda",
+      "meaning": "Significado",
+      "color": "Color"
+    }
+  },
+  "history": {
+    "title": "Cronogramas Generados",
+    "empty": "No hay cronogramas generados aún",
+    "emptyHint": "Los cronogramas generados aparecerán aquí",
+    "date": "Fecha y Hora",
+    "lastGenerated": "Última generación",
+    "workDays": "Trabajados",
+    "offDays": "Libres",
+    "inductionDays": "Inducción",
+    "drillingRequired": "Perforación Req.",
+    "status": "Estado",
+    "actions": "Acciones",
+    "clearAll": "Limpiar Todo",
+    "remove": "Eliminar",
+    "view": "Ver Cronograma",
+    "viewTitle": "Visualizar Cronograma",
+    "exportHint": "Exportar este cronograma en el formato deseado",
+    "generatedTimes": "Generado {{count}} veces",
+    "close": "Cerrar",
+    "valid": "Cronograma válido",
+    "hasErrors": "Tiene errores de validación",
+    "duplicateTooltip": "Generado {{count}} veces",
+    "note": "El historial se almacena temporalmente y se limita a 20 elementos únicos. Los duplicados incrementan el contador en lugar de crear nuevas entradas.",
+    "locale": "es-ES"
+  },
+  "presets": {
+    "title": "Configuraciones Predefinidas",
+    "selectPreset": "Seleccionar configuración",
+    "loaded": "Configuración '{{name}}' cargada exitosamente"
+  },
+  "stats": {
+    "title": "Estadísticas del Cronograma",
+    "totalDays": "Total de Días",
+    "byState": "Días por Estado",
+    "bySupervisor": "Días por Supervisor",
+    "efficiency": "Eficiencia de Rotación",
+    "workDays": "Días Trabajados",
+    "offDays": "Días Libres",
+    "utilizationRate": "Tasa de Utilización",
+    "drillingEfficiency": "Eficiencia de Perforación",
+    "showStats": "Mostrar Estadísticas",
+    "hideStats": "Ocultar Estadísticas"
+  },
+  "comparison": {
+    "title": "Comparar Configuraciones",
+    "enable": "Activar Comparación",
+    "disable": "Desactivar Comparación",
+    "current": "Configuración Actual",
+    "compare": "Configuración a Comparar",
+    "differences": "Diferencias",
+    "noDifferences": "No hay diferencias entre las configuraciones",
+    "generate": "Generar Ambos",
+    "totalDaysDiff": "Diferencia de días totales",
+    "days": "días",
+    "drillingDays": "Días de Perforación",
+    "inductionDays": "Días de Inducción",
+    "travelDays": "Días de Viaje (Subida + Bajada)",
+    "generalMetrics": "Métricas Generales",
+    "supervisorMetrics": "Métricas por Supervisor"
+  },
+  "tour": {
+    "welcome": {
+      "title": "¡Bienvenido al Cronograma de Supervisores!",
+      "description": "Esta herramienta te ayuda a generar y validar cronogramas de rotación para supervisores de perforación. Hagamos un recorrido rápido."
+    },
+    "presets": {
+      "title": "Configuraciones Predefinidas",
+      "description": "Utiliza estos botones para cargar configuraciones comunes. Cada preset tiene valores optimizados para diferentes regímenes de trabajo.",
+      "descriptionNoData": "Haz clic en cualquiera de estos presets para cargar una configuración predefinida y generar un cronograma de ejemplo. Te recomendamos empezar con el Régimen 14x7."
+    },
+    "configForm": {
+      "title": "Configuración del Cronograma",
+      "description": "Aquí defines los parámetros clave: días de trabajo, días libres, días de inducción y días de perforación requeridos. Todos los campos son validados automáticamente."
+    },
+    "generateButton": {
+      "title": "Generar Cronograma",
+      "description": "Una vez configurados los parámetros, presiona este botón para generar el cronograma. El sistema optimizará automáticamente la rotación de supervisores.",
+      "descriptionNoData": "Presiona este botón para generar tu primer cronograma. Puedes usar un preset o configurar los valores manualmente."
+    },
+    "validation": {
+      "title": "Resumen de Validación",
+      "description": "Aquí verás si el cronograma cumple con todos los requisitos. Se muestran advertencias o errores si algo necesita ajustarse."
+    },
+    "scheduleGrid": {
+      "title": "Cronograma Generado",
+      "description": "Esta tabla muestra la rotación diaria de los tres supervisores (S1, S2, S3) y el contador de días de perforación. Puedes exportar a PDF, Excel o CSV."
+    },
+    "stats": {
+      "title": "Estadísticas del Cronograma",
+      "description": "Expande esta sección para ver gráficos y métricas detalladas: tasa de utilización, eficiencia de perforación y distribución de días por supervisor."
+    },
+    "history": {
+      "title": "Historial de Cronogramas",
+      "description": "Todos los cronogramas generados se guardan aquí temporalmente. Puedes cargarlos nuevamente o exportarlos más tarde.",
+      "descriptionNoData": "Una vez que generes cronogramas, aparecerán guardados aquí. Esto te permite revisar y comparar diferentes configuraciones."
+    },
+    "controls": {
+      "title": "Controles de la App",
+      "description": "Aquí puedes activar el modo comparación para ver dos configuraciones lado a lado, cambiar el idioma y alternar entre tema claro/oscuro."
+    },
+    "finish": {
+      "title": "¡Todo listo!",
+      "description": "Ya conoces las funcionalidades principales. Puedes repetir este tour en cualquier momento desde el menú de configuración. ¡A trabajar!",
+      "descriptionNoData": "Ya conoces la interfaz básica. Ahora haz clic en un preset y genera tu primer cronograma para explorar todas las funcionalidades. Puedes repetir este tour en cualquier momento."
+    },
+    "hint": {
+      "title": "¡Nuevos componentes disponibles!",
+      "description": "Se ha generado el cronograma. Ahora puedes ver la validación, el cronograma completo y las estadísticas. Haz clic en este botón para continuar el tour desde donde lo dejaste."
+    },
+    "buttons": {
+      "next": "Siguiente",
+      "previous": "Anterior",
+      "done": "Finalizar",
+      "progress": "{{current}} de {{total}}",
+      "repeatTour": "Repetir Tour"
+    }
   }
 }

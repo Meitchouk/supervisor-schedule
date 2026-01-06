@@ -1,10 +1,18 @@
 import { useTranslation } from 'react-i18next';
 
-import { Sun, Moon, Languages, Settings } from 'lucide-react';
+import {
+  Sun,
+  Moon,
+  Languages,
+  Settings,
+  GitCompare,
+  HelpCircle,
+} from 'lucide-react';
 import { clsx } from 'clsx';
 import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { useLoading } from '../../context/LoadingContext';
+import { useComparison } from '../../context/ComparisonContext';
 import InfoTooltip from './InfoTooltip';
 
 /**
@@ -17,22 +25,46 @@ export default function Controls() {
   const { language, changeLanguage } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const { isLoading } = useLoading();
+  const { isComparisonMode, toggleComparisonMode } = useComparison();
 
   return (
-    <div className="fixed top-4 right-4 z-50">
-      {/* Desktop: Two separate buttons */}
+    <div className="fixed top-4 right-4 z-50" data-tour="controls">
+      {/* Desktop: Three separate buttons */}
       <div className="hidden md:flex gap-2">
-        {/* Language Menu */}
-        <div className="dropdown dropdown-end">
+        {/* Comparison Toggle */}
+        <div className="tooltip tooltip-left" data-tip={t('comparison.title')}>
           <button
             type="button"
-            tabIndex={0}
-            className="btn btn-ghost btn-sm btn-circle"
-            aria-label={t('controls.selectLanguage')}
+            onClick={toggleComparisonMode}
+            className={`btn btn-sm gap-2 ${isComparisonMode ? 'btn-primary' : 'btn-ghost'}`}
+            aria-label={t('comparison.title')}
             disabled={isLoading}
           >
-            <Languages size={20} />
+            <GitCompare size={18} />
+            <span className="hidden lg:inline">
+              {isComparisonMode
+                ? t('comparison.disable')
+                : t('comparison.enable')}
+            </span>
           </button>
+        </div>
+
+        {/* Language Menu */}
+        <div className="dropdown dropdown-end">
+          <div
+            className="tooltip tooltip-left"
+            data-tip={t('controls.selectLanguage')}
+          >
+            <button
+              type="button"
+              tabIndex={0}
+              className="btn btn-ghost btn-sm btn-circle"
+              aria-label={t('controls.selectLanguage')}
+              disabled={isLoading}
+            >
+              <Languages size={20} />
+            </button>
+          </div>
           <ul
             tabIndex={0}
             className="dropdown-content menu p-2 shadow-lg bg-base-200 rounded-box w-40 mt-2"
@@ -57,17 +89,45 @@ export default function Controls() {
         </div>
 
         {/* Theme Toggle */}
-        <button
-          type="button"
-          onClick={toggleTheme}
-          className="btn btn-ghost btn-sm btn-circle"
-          aria-label={t('controls.toggleTheme', {
+        <div
+          className="tooltip tooltip-left"
+          data-tip={t('controls.toggleTheme', {
             mode: theme === 'dark' ? t('theme.light') : t('theme.dark'),
           })}
-          disabled={isLoading}
         >
-          {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="btn btn-ghost btn-sm btn-circle"
+            aria-label={t('controls.toggleTheme', {
+              mode: theme === 'dark' ? t('theme.light') : t('theme.dark'),
+            })}
+            disabled={isLoading}
+          >
+            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+        </div>
+
+        {/* Repeat Tour Button */}
+        <div
+          className="tooltip tooltip-left"
+          data-tip={t('tour.buttons.repeatTour')}
+        >
+          <button
+            type="button"
+            onClick={() => {
+              if (window.startAppTour) {
+                window.startAppTour();
+              }
+            }}
+            className="btn btn-ghost btn-sm btn-circle"
+            aria-label={t('tour.buttons.repeatTour')}
+            disabled={isLoading}
+            data-tour="repeat-tour-button"
+          >
+            <HelpCircle size={20} />
+          </button>
+        </div>
       </div>
 
       {/* Mobile: Settings dropdown with toggles */}
@@ -86,12 +146,43 @@ export default function Controls() {
             tabIndex={0}
             className="dropdown-content bg-base-200 rounded-box p-4 shadow-lg w-64 mt-2"
           >
+            {/* Comparison Toggle */}
+            <div className="mb-4">
+              <div className="flex items-center gap-2 mb-2">
+                <GitCompare size={16} className="text-base-content/70" />
+                <span className="text-sm font-medium">
+                  {t('comparison.title')}
+                </span>
+              </div>
+              <label className="label cursor-pointer justify-start gap-3">
+                <input
+                  type="checkbox"
+                  className="toggle toggle-primary toggle-sm"
+                  checked={isComparisonMode}
+                  onChange={toggleComparisonMode}
+                  disabled={isLoading}
+                />
+                <span className="label-text">
+                  {isComparisonMode
+                    ? t('comparison.disable')
+                    : t('comparison.enable')}
+                </span>
+              </label>
+            </div>
+
+            <div className="divider my-2"></div>
+
             {/* Language Toggle */}
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <Languages size={16} className="text-base-content/70" />
-                <span className="text-sm font-medium">{t('controls.language')}</span>
-                <InfoTooltip tooltipKey="controls.languageTooltip" position="bottom" />
+                <span className="text-sm font-medium">
+                  {t('controls.language')}
+                </span>
+                <InfoTooltip
+                  tooltipKey="controls.languageTooltip"
+                  position="bottom"
+                />
               </div>
               <label className="label cursor-pointer justify-between gap-3 w-36">
                 <span className="label-text font-medium">ES</span>
@@ -99,7 +190,9 @@ export default function Controls() {
                   type="checkbox"
                   className="toggle toggle-primary toggle-sm"
                   checked={language === 'en'}
-                  onChange={() => changeLanguage(language === 'en' ? 'es' : 'en')}
+                  onChange={() =>
+                    changeLanguage(language === 'en' ? 'es' : 'en')
+                  }
                   disabled={isLoading}
                 />
                 <span className="label-text font-medium">EN</span>
@@ -111,9 +204,18 @@ export default function Controls() {
             {/* Theme Toggle */}
             <div>
               <div className="flex items-center gap-2 mb-2">
-                {theme === 'dark' ? <Moon size={16} className="text-base-content/70" /> : <Sun size={16} className="text-base-content/70" />}
-                <span className="text-sm font-medium">{t('controls.theme')}</span>
-                <InfoTooltip tooltipKey="controls.themeTooltip" position="bottom" />
+                {theme === 'dark' ? (
+                  <Moon size={16} className="text-base-content/70" />
+                ) : (
+                  <Sun size={16} className="text-base-content/70" />
+                )}
+                <span className="text-sm font-medium">
+                  {t('controls.theme')}
+                </span>
+                <InfoTooltip
+                  tooltipKey="controls.themeTooltip"
+                  position="bottom"
+                />
               </div>
               <label className="label cursor-pointer justify-between gap-3 w-36">
                 <Moon size={16} />
@@ -126,6 +228,26 @@ export default function Controls() {
                 />
                 <Sun size={16} />
               </label>
+            </div>
+
+            <div className="divider my-2"></div>
+
+            {/* Repeat Tour Button */}
+            <div>
+              <button
+                type="button"
+                onClick={() => {
+                  if (window.startAppTour) {
+                    window.startAppTour();
+                  }
+                }}
+                className="btn btn-sm btn-outline w-full gap-2"
+                disabled={isLoading}
+                data-tour="repeat-tour-button"
+              >
+                <HelpCircle size={16} />
+                {t('tour.buttons.repeatTour')}
+              </button>
             </div>
           </div>
         </div>

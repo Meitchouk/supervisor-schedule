@@ -9,8 +9,14 @@ import {
  * Displays the generated schedule in a grid/table format using daisyUI.
  * Shows 3 supervisor rows + drilling count row.
  */
-export default function ScheduleGrid({ scheduleResult }) {
+export default function ScheduleGrid({ scheduleResult, config }) {
   const { t } = useTranslation();
+
+  // Generate regime label from config
+  const getRegimeLabel = () => {
+    if (!config) return '';
+    return ` (${config.workDays}x${config.offDays})`;
+  };
 
   if (
     !scheduleResult ||
@@ -35,9 +41,16 @@ export default function ScheduleGrid({ scheduleResult }) {
   let s3ActiveDay = days.findIndex((d) => d.s3 !== 'EMPTY');
 
   return (
-    <div className="card bg-base-100 shadow-xl">
+    <div className="card bg-base-100 shadow-xl" data-tour="schedule-grid">
       <div className="card-body">
-        <h2 className="card-title">{t('schedule.title')}</h2>
+        <h2 className="card-title">
+          {t('schedule.title')}
+          {config && (
+            <span className="text-sm font-normal opacity-70">
+              {getRegimeLabel()}
+            </span>
+          )}
+        </h2>
 
         <div className="overflow-x-auto">
           <table className="table table-xs table-pin-rows table-pin-cols">

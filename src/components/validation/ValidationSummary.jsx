@@ -21,7 +21,7 @@ export default function ValidationSummary({ scheduleResult }) {
   const hasInfos = infos.length > 0;
 
   return (
-    <div className="card bg-base-100 shadow-xl">
+    <div className="card bg-base-100 shadow-xl" data-tour="validation">
       <div className="card-body">
         <h3 className="card-title">{t('validation.title')}</h3>
 
