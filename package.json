@@ -11,6 +11,9 @@
     "lint": "eslint src/",
     "format": "prettier --write \"src/**/*.{js,jsx,css}\" \"*.{js,cjs,json,md}\"",
     "check": "npm run format && npm run lint && npm run build",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
@@ -24,7 +27,10 @@
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.1",
     "@vitejs/plugin-react": "^4.2.0",
+    "@vitest/ui": "^4.0.16",
     "autoprefixer": "^10.4.23",
     "daisyui": "^5.5.14",
     "eslint": "^8.55.0",
@@ -33,9 +39,11 @@
     "eslint-plugin-react": "^7.33.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "gh-pages": "^6.1.0",
+    "jsdom": "^27.0.1",
     "postcss": "^8.5.6",
     "prettier": "^3.1.0",
     "tailwindcss": "^3.4.19",
-    "vite": "^5.0.0"
+    "vite": "^5.0.0",
+    "vitest": "^4.0.16"
   }
 }

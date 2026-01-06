@@ -17,17 +17,25 @@
     "generateButton": "Generar Cronograma"
   },
   "schedule": {
-    "title": "Cuadrícula de Cronograma",
-    "empty": "Aún no se ha generado un cronograma.",
-    "emptyHint": "Configure los parámetros y haga clic en \"Generar Cronograma\" para comenzar."
-  },
-  "legend": {
-    "title": "Leyenda"
+    "title": "Cronograma Generado",
+    "noData": "Aún no se ha generado un cronograma. Configure los parámetros y haga clic en 'Generar Cronograma'.",
+    "supervisor": "Supervisor",
+    "day": "Día",
+    "drillingCount": "Conteo de Perforación",
+    "legend": "Leyenda",
+    "states": {
+      "up": "Subida",
+      "induction": "Inducción",
+      "drilling": "Perforación",
+      "down": "Bajada",
+      "rest": "Descanso",
+      "empty": "Vacío"
+    }
   },
   "validation": {
     "title": "Resumen de Validación",
     "placeholder": "Los resultados de validación aparecerán aquí después de generar un cronograma.",
-    "success": "El cronograma es válido",
+    "success": "¡El cronograma es válido! Se cumplen todas las reglas.",
     "issuesFound": "Problemas Encontrados:"
   },
   "theme": {

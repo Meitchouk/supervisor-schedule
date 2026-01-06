@@ -38,4 +38,25 @@ const STATE_TO_COLOR_CLASS = {
   [STATE.EMPTY]: 'state-empty',
 };
 
-export { STATE, STATE_TO_LABEL, STATE_TO_COLOR_CLASS };
+/**
+ * Map state to daisyUI badge class for styling.
+ */
+const STATE_TO_BADGE_CLASS = {
+  [STATE.UP]: 'badge-info', // Azul - Subida
+  [STATE.INDUCTION]: 'badge-warning', // Amarillo - Inducción
+  [STATE.DRILLING]: 'badge-success', // Verde - Perforación
+  [STATE.DOWN]: 'badge-error', // Rojo - Bajada
+  [STATE.REST]: 'badge-ghost', // Gris - Descanso
+  [STATE.EMPTY]: 'badge-outline', // Blanco - Vacío
+};
+
+/**
+ * Get badge class for a state.
+ * @param {string} state
+ * @returns {string}
+ */
+export function getStateBadgeClass(state) {
+  return STATE_TO_BADGE_CLASS[state] || 'badge-neutral';
+}
+
+export { STATE, STATE_TO_LABEL, STATE_TO_COLOR_CLASS, STATE_TO_BADGE_CLASS };

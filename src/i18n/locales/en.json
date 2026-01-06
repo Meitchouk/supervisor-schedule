@@ -17,17 +17,27 @@
     "generateButton": "Generate Schedule"
   },
   "schedule": {
-    "title": "Schedule Grid",
-    "empty": "No schedule generated yet.",
-    "emptyHint": "Configure parameters and click \"Generate Schedule\" to begin."
-  },
-  "legend": {
-    "title": "Legend"
+    "title": "Generated Schedule",
+    "noData": "No schedule generated yet. Configure parameters and click 'Generate Schedule'.",
+    "supervisor": "Supervisor",
+    "day": "Day",
+    "drillingCount": "Drilling Count",
+    "legend": "Legend",
+    "empty": "Empty",
+    "emptyHint": "No activity scheduled",
+    "states": {
+      "up": "Travel Up",
+      "induction": "Induction",
+      "drilling": "Drilling",
+      "down": "Travel Down",
+      "rest": "Rest",
+      "empty": "Empty"
+    }
   },
   "validation": {
     "title": "Validation Summary",
     "placeholder": "Validation results will appear here after generating a schedule.",
-    "success": "Schedule is valid",
+    "success": "Schedule is valid! All rules are met.",
     "issuesFound": "Issues Found:"
   },
   "theme": {

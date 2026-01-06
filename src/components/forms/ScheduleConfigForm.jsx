@@ -24,18 +24,19 @@ export default function ScheduleConfigForm({
 
   return (
     <form
-      className="card bg-base-100 shadow-xl h-full"
+      className="card bg-base-100 shadow-xl h-auto w-auto inline-block"
       onSubmit={(e) => e.preventDefault()}
     >
-      <div className="card-body h-full flex flex-col gap-4">
-        <h2 className="card-title">{t('config.title')}</h2>
+      <div className="card-body flex flex-col gap-4">
+        <h2 className="card-title font-bold">{t('config.title')}</h2>
 
-        <div className="form-control w-full">
-          <label htmlFor="workDays" className="label">
+        {/* MARK: Work Days */}
+        <fieldset className="fieldset w-full">
+          <legend className="fieldset-legend">
             <InfoTooltip tooltipKey="config.workDaysTooltip">
-              <span className="label-text">{t('config.workDays')}</span>
+              <span>{t('config.workDays')}</span>
             </InfoTooltip>
-          </label>
+          </legend>
           <input
             id="workDays"
             type="number"
@@ -43,17 +44,19 @@ export default function ScheduleConfigForm({
             max="31"
             value={config.workDays}
             onChange={(e) => handleInputChange('workDays', e.target.value)}
-            className="input input-bordered w-full"
+            className="input"
             disabled={isLoading}
+            required
           />
-        </div>
+        </fieldset>
 
-        <div className="form-control w-full">
-          <label htmlFor="offDays" className="label">
+        {/* MARK: Off Days */}
+        <fieldset className="fieldset w-full">
+          <legend className="fieldset-legend">
             <InfoTooltip tooltipKey="config.offDaysTooltip">
-              <span className="label-text">{t('config.offDays')}</span>
+              <span>{t('config.offDays')}</span>
             </InfoTooltip>
-          </label>
+          </legend>
           <input
             id="offDays"
             type="number"
@@ -61,17 +64,19 @@ export default function ScheduleConfigForm({
             max="31"
             value={config.offDays}
             onChange={(e) => handleInputChange('offDays', e.target.value)}
-            className="input input-bordered w-full"
+            className="input"
             disabled={isLoading}
+            required
           />
-        </div>
+        </fieldset>
 
-        <div className="form-control w-full">
-          <label htmlFor="inductionDays" className="label">
+        {/* MARK: Induction Days */}
+        <fieldset className="fieldset w-full">
+          <legend className="fieldset-legend">
             <InfoTooltip tooltipKey="config.inductionDaysTooltip">
-              <span className="label-text">{t('config.inductionDays')}</span>
+              <span>{t('config.inductionDays')}</span>
             </InfoTooltip>
-          </label>
+          </legend>
           <input
             id="inductionDays"
             type="number"
@@ -79,19 +84,19 @@ export default function ScheduleConfigForm({
             max="5"
             value={config.inductionDays}
             onChange={(e) => handleInputChange('inductionDays', e.target.value)}
-            className="input input-bordered w-full"
+            className="input"
             disabled={isLoading}
+            required
           />
-        </div>
+        </fieldset>
 
-        <div className="form-control w-full">
-          <label htmlFor="drillingDaysRequired" className="label">
+        {/* MARK: Drilling Days Required */}
+        <fieldset className="fieldset w-full">
+          <legend className="fieldset-legend">
             <InfoTooltip tooltipKey="config.drillingDaysRequiredTooltip">
-              <span className="label-text">
-                {t('config.drillingDaysRequired')}
-              </span>
+              <span>{t('config.drillingDaysRequired')}</span>
             </InfoTooltip>
-          </label>
+          </legend>
           <input
             id="drillingDaysRequired"
             type="number"
@@ -101,16 +106,18 @@ export default function ScheduleConfigForm({
             onChange={(e) =>
               handleInputChange('drillingDaysRequired', e.target.value)
             }
-            className="input input-bordered w-full"
+            className="input"
             disabled={isLoading}
+            required
           />
-        </div>
+        </fieldset>
 
-        <div className="card-actions justify-end mt-auto">
+        {/* MARK: Generate Schedule Button */}
+        <div className="card-actions align-middle mt-auto flex justify-center">
           <button
             type="button"
             onClick={onGenerateSchedule}
-            className="btn btn-primary w-full"
+            className="btn btn-primary w-auto px-5"
             disabled={isLoading}
           >
             {isLoading ? (

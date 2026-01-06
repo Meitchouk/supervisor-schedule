@@ -25,7 +25,7 @@ export default function Legend() {
   return (
     <div className="card bg-base-100 shadow-xl">
       <div className="card-body">
-        <h3 className="card-title">{t('legend.title')}</h3>
+        <h3 className="card-title">{t('schedule.legend')}</h3>
         <ul className="menu menu-compact">
           {states.map((state) => (
             <li key={state}>
