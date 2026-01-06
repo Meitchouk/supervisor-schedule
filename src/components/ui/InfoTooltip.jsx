@@ -8,19 +8,18 @@ import { useTranslation } from 'react-i18next';
  *
  * @param {string} tooltipKey - i18n key for the tooltip text
  * @param {ReactNode} children - Content to display before the info icon
+ * @param {string} position - Tooltip position: 'left', 'top', 'bottom', or 'right' (default)
+ * @param {boolean} icon - Whether to display the info icon (default: true)
  */
 export default function InfoTooltip({ tooltipKey, children, position = 'right', icon = true }) {
   const { t } = useTranslation();
   const tooltipText = t(tooltipKey);
-  let tooltipPositionClass = 'tooltip-right';
-
-  if (position === 'left') {
-    tooltipPositionClass = 'tooltip-left';
-  } else if (position === 'top') {
-    tooltipPositionClass = 'tooltip-top';
-  } else if (position === 'bottom') {
-    tooltipPositionClass = 'tooltip-bottom';
-  }
+  
+  // Validate position prop
+  const validPositions = ['left', 'top', 'bottom', 'right'];
+  const safePosition = validPositions.includes(position) ? position : 'right';
+  
+  const tooltipPositionClass = `tooltip-${safePosition}`;
 
   return (
     <div className="flex items-center gap-2">

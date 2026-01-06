@@ -2,6 +2,20 @@ import { useState, useEffect } from 'react';
 import { useLoading } from '../../context/LoadingContext';
 
 /**
+ * Simple debounce utility
+ * @param {Function} func - Function to debounce
+ * @param {number} delay - Delay in milliseconds
+ * @returns {Function} Debounced function
+ */
+function debounce(func, delay) {
+  let timeoutId;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func(...args), delay);
+  };
+}
+
+/**
  * LoadingBar component
  * Displays an animated progress bar when loading is active
  * On mobile: sticky at top of viewport
@@ -18,9 +32,10 @@ export default function LoadingBar() {
     };
 
     checkMobile();
-    window.addEventListener('resize', checkMobile);
+    const debouncedCheckMobile = debounce(checkMobile, 150);
+    window.addEventListener('resize', debouncedCheckMobile);
 
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', debouncedCheckMobile);
   }, []);
 
   useEffect(() => {
@@ -30,19 +45,20 @@ export default function LoadingBar() {
     }
 
     const handleScroll = () => {
-      // Si el scroll es mayor a la altura del header (~100px), hacerlo sticky
+      // If scroll is greater than header height (~100px), make it sticky
       setIsSticky(window.scrollY > 100);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const debouncedHandleScroll = debounce(handleScroll, 100);
+    window.addEventListener('scroll', debouncedHandleScroll);
+    return () => window.removeEventListener('scroll', debouncedHandleScroll);
   }, [isMobile]);
 
   const showLoading = isLoading || isInitialLoading;
 
-  // Mobile: fixed top-0 cuando se hace scroll, normal cuando está arriba
-  // Desktop: flujo normal en header
-  // Con loading: animación morada, Sin loading: barra estática primaria
+  // Mobile: fixed top-0 when scrolling, normal when at top
+  // Desktop: normal flow in header
+  // With loading: purple animation, Without loading: static primary bar
   const containerClasses = `w-full ${
     isMobile && isSticky ? 'fixed top-0 left-0 right-0 z-50 bg-base-100' : ''
   }`;

@@ -107,7 +107,7 @@ export default function ScheduleConfigForm({
             {...register('workDays', { valueAsNumber: true })}
             value={config.workDays}
             onChange={(e) => handleInputChange('workDays', e.target.value)}
-            className={`input validator text-right pr-10 w-full ${
+            className={`input text-right pr-10 w-full ${
               errors.workDays ? 'input-error' : ''
             }`}
             placeholder="1-31"
@@ -115,7 +115,7 @@ export default function ScheduleConfigForm({
             disabled={isLoading}
           />
           {errors.workDays && (
-            <p className="validator-hint text-error text-sm mt-1">
+            <p className="text-error text-sm mt-1">
               {errors.workDays.message}
             </p>
           )}
@@ -136,7 +136,7 @@ export default function ScheduleConfigForm({
             {...register('offDays', { valueAsNumber: true })}
             value={config.offDays}
             onChange={(e) => handleInputChange('offDays', e.target.value)}
-            className={`input validator text-right pr-10 w-full ${
+            className={`input text-right pr-10 w-full ${
               errors.offDays ? 'input-error' : ''
             }`}
             placeholder="1-31"
@@ -144,7 +144,7 @@ export default function ScheduleConfigForm({
             disabled={isLoading}
           />
           {errors.offDays && (
-            <p className="validator-hint text-error text-sm mt-1">
+            <p className="text-error text-sm mt-1">
               {errors.offDays.message}
             </p>
           )}
@@ -165,7 +165,7 @@ export default function ScheduleConfigForm({
             {...register('inductionDays', { valueAsNumber: true })}
             value={config.inductionDays}
             onChange={(e) => handleInputChange('inductionDays', e.target.value)}
-            className={`input validator text-right pr-10 w-full ${
+            className={`input text-right pr-10 w-full ${
               errors.inductionDays ? 'input-error' : ''
             }`}
             placeholder="1-5"
@@ -173,7 +173,7 @@ export default function ScheduleConfigForm({
             disabled={isLoading}
           />
           {errors.inductionDays && (
-            <p className="validator-hint text-error text-sm mt-1">
+            <p className="text-error text-sm mt-1">
               {errors.inductionDays.message}
             </p>
           )}
@@ -196,7 +196,7 @@ export default function ScheduleConfigForm({
             onChange={(e) =>
               handleInputChange('drillingDaysRequired', e.target.value)
             }
-            className={`input validator text-right pr-10 w-full ${
+            className={`input text-right pr-10 w-full ${
               errors.drillingDaysRequired ? 'input-error' : ''
             }`}
             placeholder="1-1000"
@@ -204,7 +204,7 @@ export default function ScheduleConfigForm({
             disabled={isLoading}
           />
           {errors.drillingDaysRequired && (
-            <p className="validator-hint text-error text-sm mt-1">
+            <p className="text-error text-sm mt-1">
               {errors.drillingDaysRequired.message}
             </p>
           )}
