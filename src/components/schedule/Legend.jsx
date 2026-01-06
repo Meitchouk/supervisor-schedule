@@ -28,7 +28,7 @@ export default function Legend() {
           <span className="badge badge-ghost badge-sm">
             [ {STATE_TO_LABEL['REST']} ] - {t('schedule.states.rest')}
           </span>
-          <span className="badge badge-outline badge-sm">
+          <span className="badge badge-sm bg-white text-neutral-content border border-base-300">
             [ {STATE_TO_LABEL['EMPTY']} ] - {t('schedule.states.empty')}
           </span>
         </div>

@@ -90,8 +90,13 @@ export default function Controls() {
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
                 <Languages size={16} className="text-base-content/70" />
-                <span className="text-sm font-medium">{t('controls.language')}</span>
-                <InfoTooltip tooltipKey="controls.languageTooltip" position="bottom" />
+                <span className="text-sm font-medium">
+                  {t('controls.language')}
+                </span>
+                <InfoTooltip
+                  tooltipKey="controls.languageTooltip"
+                  position="bottom"
+                />
               </div>
               <label className="label cursor-pointer justify-between gap-3 w-36">
                 <span className="label-text font-medium">ES</span>
@@ -99,7 +104,9 @@ export default function Controls() {
                   type="checkbox"
                   className="toggle toggle-primary toggle-sm"
                   checked={language === 'en'}
-                  onChange={() => changeLanguage(language === 'en' ? 'es' : 'en')}
+                  onChange={() =>
+                    changeLanguage(language === 'en' ? 'es' : 'en')
+                  }
                   disabled={isLoading}
                 />
                 <span className="label-text font-medium">EN</span>
@@ -111,9 +118,18 @@ export default function Controls() {
             {/* Theme Toggle */}
             <div>
               <div className="flex items-center gap-2 mb-2">
-                {theme === 'dark' ? <Moon size={16} className="text-base-content/70" /> : <Sun size={16} className="text-base-content/70" />}
-                <span className="text-sm font-medium">{t('controls.theme')}</span>
-                <InfoTooltip tooltipKey="controls.themeTooltip" position="bottom" />
+                {theme === 'dark' ? (
+                  <Moon size={16} className="text-base-content/70" />
+                ) : (
+                  <Sun size={16} className="text-base-content/70" />
+                )}
+                <span className="text-sm font-medium">
+                  {t('controls.theme')}
+                </span>
+                <InfoTooltip
+                  tooltipKey="controls.themeTooltip"
+                  position="bottom"
+                />
               </div>
               <label className="label cursor-pointer justify-between gap-3 w-36">
                 <Moon size={16} />

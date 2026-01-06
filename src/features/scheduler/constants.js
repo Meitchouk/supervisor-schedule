@@ -30,12 +30,13 @@ const STATE_TO_COLOR_CLASS = {
 };
 
 const STATE_TO_BADGE_CLASS = {
-  [STATE.UP]: 'badge-info', // Blue - Travel Up
-  [STATE.INDUCTION]: 'badge-warning', // Yellow - Induction
-  [STATE.DRILLING]: 'badge-success', // Green - Drilling
-  [STATE.DOWN]: 'badge-error', // Red - Travel Down
-  [STATE.REST]: 'badge-ghost', // Gray - Rest
-  [STATE.EMPTY]: 'badge-outline', // White - Empty
+  [STATE.UP]: 'badge-info', // Azul - Travel Up
+  [STATE.INDUCTION]: 'badge-warning', // Naranja/Amarillo - Induction
+  [STATE.DRILLING]: 'badge-success', // Verde - Drilling
+  [STATE.DOWN]: 'badge-error', // Rojo - Travel Down
+  [STATE.REST]: 'badge-ghost', // Gris - Rest
+  [STATE.EMPTY]:
+    'badge-neutral bg-white text-neutral-content border border-base-300', // Blanco - Empty
 };
 
 export function getStateBadgeClass(state) {

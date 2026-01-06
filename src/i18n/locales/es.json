@@ -75,5 +75,39 @@
       "english": "English",
       "spanish": "Español"
     }
+  },
+  "export": {
+    "button": "Exportar",
+    "error": "Error al exportar. Por favor, inténtelo de nuevo.",
+    "formats": {
+      "pdf": "Exportar como PDF",
+      "csv": "Exportar como CSV",
+      "excel": "Exportar como Excel"
+    }
+  },
+  "history": {
+    "title": "Cronogramas Generados",
+    "empty": "No hay cronogramas generados aún",
+    "emptyHint": "Los cronogramas generados aparecerán aquí",
+    "date": "Fecha y Hora",
+    "lastGenerated": "Última generación",
+    "workDays": "Días T.",
+    "offDays": "Días L.",
+    "inductionDays": "Días I.",
+    "drillingRequired": "Días P. Req.",
+    "status": "Estado",
+    "actions": "Acciones",
+    "clearAll": "Limpiar Todo",
+    "remove": "Eliminar",
+    "view": "Ver Cronograma",
+    "viewTitle": "Visualizar Cronograma",
+    "exportHint": "Exportar este cronograma en el formato deseado",
+    "generatedTimes": "Generado {{count}} veces",
+    "close": "Cerrar",
+    "valid": "Cronograma válido",
+    "hasErrors": "Tiene errores de validación",
+    "duplicateTooltip": "Generado {{count}} veces",
+    "note": "El historial se almacena temporalmente y se limita a 20 elementos únicos. Los duplicados incrementan el contador en lugar de crear nuevas entradas.",
+    "locale": "es-ES"
   }
 }

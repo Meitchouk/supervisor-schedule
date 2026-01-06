@@ -107,9 +107,7 @@ export default function ScheduleConfigForm({
             disabled={isLoading}
           />
           {errors.workDays && (
-            <p className="text-error text-sm mt-1">
-              {errors.workDays.message}
-            </p>
+            <p className="text-error text-sm mt-1">{errors.workDays.message}</p>
           )}
         </fieldset>
 
@@ -135,9 +133,7 @@ export default function ScheduleConfigForm({
             disabled={isLoading}
           />
           {errors.offDays && (
-            <p className="text-error text-sm mt-1">
-              {errors.offDays.message}
-            </p>
+            <p className="text-error text-sm mt-1">{errors.offDays.message}</p>
           )}
         </fieldset>
 

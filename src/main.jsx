@@ -6,6 +6,7 @@ import App from './app/App';
 import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { LoadingProvider, useLoading } from './context/LoadingContext';
+import { ScheduleHistoryProvider } from './context/ScheduleHistoryContext';
 import { ScheduleProvider } from './context/ScheduleContext';
 import './i18n/config';
 import './styles/globals.css';
@@ -66,9 +67,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <LoadingProvider>
       <LanguageProvider>
         <ThemeProvider>
-          <ScheduleProvider>
-            <AppWrapper />
-          </ScheduleProvider>
+          <ScheduleHistoryProvider>
+            <ScheduleProvider>
+              <AppWrapper />
+            </ScheduleProvider>
+          </ScheduleHistoryProvider>
         </ThemeProvider>
       </LanguageProvider>
     </LoadingProvider>

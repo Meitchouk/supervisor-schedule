@@ -77,5 +77,39 @@
       "english": "English",
       "spanish": "Español"
     }
+  },
+  "export": {
+    "button": "Export",
+    "error": "Export failed. Please try again.",
+    "formats": {
+      "pdf": "Export as PDF",
+      "csv": "Export as CSV",
+      "excel": "Export as Excel"
+    }
+  },
+  "history": {
+    "title": "Generated Schedules",
+    "empty": "No schedules generated yet",
+    "emptyHint": "Generated schedules will appear here",
+    "date": "Date & Time",
+    "lastGenerated": "Last generated",
+    "workDays": "Work D.",
+    "offDays": "Off D.",
+    "inductionDays": "Induct. D.",
+    "drillingRequired": "Drill. Req.",
+    "status": "Status",
+    "actions": "Actions",
+    "clearAll": "Clear All",
+    "remove": "Remove",
+    "view": "View Schedule",
+    "viewTitle": "View Schedule",
+    "exportHint": "Export this schedule in your desired format",
+    "generatedTimes": "Generated {{count}} times",
+    "close": "Close",
+    "valid": "Valid schedule",
+    "hasErrors": "Has validation errors",
+    "duplicateTooltip": "Generated {{count}} times",
+    "note": "History is stored temporarily and limited to 20 unique items. Duplicates increment the counter instead of creating new entries.",
+    "locale": "en-US"
   }
 }

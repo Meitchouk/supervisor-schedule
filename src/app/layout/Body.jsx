@@ -1,6 +1,4 @@
-import {
-  ScheduleConfigForm,
-} from '../../components/forms';
+import { ScheduleConfigForm } from '../../components/forms';
 import {
   ScheduleGrid,
   Legend,
@@ -12,6 +10,8 @@ import {
   ValidationSummary,
   ValidationSummarySkeleton,
 } from '../../components/validation';
+import { ExportButton } from '../../components/export';
+import { ScheduleHistory } from '../../components/history';
 import { useSchedule } from '../../context/ScheduleContext';
 import { useLoading } from '../../context/LoadingContext';
 import ContentContainer from './ContentContainer';
@@ -41,6 +41,13 @@ export default function Body() {
           }
           main={
             <StackLayout>
+              {/* Export button - only shows when schedule exists */}
+              {scheduleResult && !isLoading && (
+                <div className="flex justify-end">
+                  <ExportButton />
+                </div>
+              )}
+
               {isLoading ? (
                 <>
                   <ScheduleGridSkeleton />
@@ -60,6 +67,9 @@ export default function Body() {
               ) : (
                 <ValidationSummary scheduleResult={scheduleResult} />
               )}
+
+              {/* Schedule History */}
+              <ScheduleHistory />
             </StackLayout>
           }
         />
