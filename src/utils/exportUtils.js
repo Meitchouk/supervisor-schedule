@@ -76,10 +76,48 @@ function scheduleToTableData(scheduleResult) {
 }
 
 /**
+ * MARK: Default translations (fallback to English)
+ */
+const DEFAULT_TRANSLATIONS = {
+  pdf: {
+    title: 'Supervisor Schedule',
+    workDays: 'Work Days',
+    offDays: 'Off Days',
+    inductionDays: 'Induction Days',
+    drillingDaysRequired: 'Drilling Days Required',
+    days: 'Days',
+    page: 'Page',
+    of: 'of',
+    continued: '(continued)',
+    legend: 'Legend',
+    states: {
+      up: 'Travel Up',
+      induction: 'Induction',
+      drilling: 'Drilling',
+      down: 'Travel Down',
+      rest: 'Rest',
+      empty: 'Empty',
+    },
+  },
+  excel: {
+    scheduleSheet: 'Schedule',
+    configSheet: 'Config & Legend',
+    configuration: 'Configuration',
+    value: 'Value',
+    legend: 'Legend',
+    meaning: 'Meaning',
+    color: 'Color',
+  },
+};
+
+/**
  * MARK: Export schedule to PDF
  */
-export function exportToPDF(scheduleResult, config) {
+export function exportToPDF(scheduleResult, config, translations = {}) {
   try {
+    // Merge translations with defaults
+    const t = { ...DEFAULT_TRANSLATIONS.pdf, ...translations };
+
     const doc = new jsPDF({
       orientation: 'landscape',
       unit: 'mm',
@@ -90,8 +128,7 @@ export function exportToPDF(scheduleResult, config) {
     const DAYS_PER_TABLE = 30;
     const totalTables = Math.ceil(days.length / DAYS_PER_TABLE);
     const pageHeight = doc.internal.pageSize.height;
-    // const pageWidth = doc.internal.pageSize.width;
-    const TABLE_HEIGHT_ESTIMATE = 35; // Approximate height of a table
+    const TABLE_HEIGHT_ESTIMATE = 35;
     const MARGIN_BOTTOM = 20;
 
     let currentY = 20;
@@ -99,18 +136,18 @@ export function exportToPDF(scheduleResult, config) {
 
     // Title and config on first page
     doc.setFontSize(18);
-    doc.text('Supervisor Schedule', 14, currentY);
+    doc.text(t.title, 14, currentY);
     currentY += 8;
 
     doc.setFontSize(10);
     doc.text(
-      `Work Days: ${config.workDays} | Off Days: ${config.offDays}`,
+      `${t.workDays}: ${config.workDays} | ${t.offDays}: ${config.offDays}`,
       14,
       currentY,
     );
     currentY += 5;
     doc.text(
-      `Induction Days: ${config.inductionDays} | Drilling Days Required: ${config.drillingDaysRequired}`,
+      `${t.inductionDays}: ${config.inductionDays} | ${t.drillingDaysRequired}: ${config.drillingDaysRequired}`,
       14,
       currentY,
     );
@@ -134,16 +171,16 @@ export function exportToPDF(scheduleResult, config) {
 
         // Add title on new page
         doc.setFontSize(18);
-        doc.text('Supervisor Schedule', 14, currentY);
+        doc.text(t.title, 14, currentY);
         doc.setFontSize(9);
-        doc.text(`(continued)`, 14 + 80, currentY);
+        doc.text(t.continued, 14 + 80, currentY);
         currentY += 15;
       }
 
       // Days range indicator
       doc.setFontSize(9);
       doc.setTextColor(100, 100, 100);
-      doc.text(`Days ${startIdx} - ${endIdx - 1}`, 14, currentY);
+      doc.text(`${t.days} ${startIdx} - ${endIdx - 1}`, 14, currentY);
       doc.setTextColor(0, 0, 0);
       currentY += 3;
 
@@ -206,7 +243,6 @@ export function exportToPDF(scheduleResult, config) {
     }
 
     // Legend at the end
-    // Check if legend fits on current page
     if (currentY + 30 > pageHeight - MARGIN_BOTTOM) {
       doc.addPage();
       currentY = 20;
@@ -214,18 +250,19 @@ export function exportToPDF(scheduleResult, config) {
 
     doc.setFontSize(10);
     doc.setFont(undefined, 'bold');
-    doc.text('Legend:', 14, currentY);
+    doc.text(`${t.legend}:`, 14, currentY);
     currentY += 6;
 
     doc.setFont(undefined, 'normal');
     doc.setFontSize(9);
+    const states = t.states || DEFAULT_TRANSLATIONS.pdf.states;
     const legendItems = [
-      { label: 'S = Travel Up', color: STATE_COLORS.UP.rgb },
-      { label: 'I = Induction', color: STATE_COLORS.INDUCTION.rgb },
-      { label: 'P = Drilling', color: STATE_COLORS.DRILLING.rgb },
-      { label: 'B = Travel Down', color: STATE_COLORS.DOWN.rgb },
-      { label: 'D = Rest', color: STATE_COLORS.REST.rgb },
-      { label: '- = Empty', color: STATE_COLORS.EMPTY.rgb },
+      { label: `S = ${states.up}`, color: STATE_COLORS.UP.rgb },
+      { label: `I = ${states.induction}`, color: STATE_COLORS.INDUCTION.rgb },
+      { label: `P = ${states.drilling}`, color: STATE_COLORS.DRILLING.rgb },
+      { label: `B = ${states.down}`, color: STATE_COLORS.DOWN.rgb },
+      { label: `D = ${states.rest}`, color: STATE_COLORS.REST.rgb },
+      { label: `- = ${states.empty}`, color: STATE_COLORS.EMPTY.rgb },
     ];
 
     legendItems.forEach((item, index) => {
@@ -274,8 +311,16 @@ export function exportToCSV(scheduleResult) {
 /**
  * MARK: Export schedule to Excel with colors using ExcelJS
  */
-export async function exportToExcel(scheduleResult, config) {
+export async function exportToExcel(scheduleResult, config, translations = {}) {
   try {
+    // Merge translations with defaults
+    const t = { ...DEFAULT_TRANSLATIONS.excel, ...translations };
+    const pdfT = {
+      ...DEFAULT_TRANSLATIONS.pdf,
+      ...(translations.states ? { states: translations.states } : {}),
+    };
+    const states = pdfT.states || DEFAULT_TRANSLATIONS.pdf.states;
+
     const { headers, rows } = scheduleToTableData(scheduleResult);
 
     // Create workbook
@@ -284,7 +329,7 @@ export async function exportToExcel(scheduleResult, config) {
     workbook.created = new Date();
 
     // Schedule sheet
-    const worksheet = workbook.addWorksheet('Schedule');
+    const worksheet = workbook.addWorksheet(t.scheduleSheet);
 
     // Add header row
     const headerRow = worksheet.addRow(headers);
@@ -366,14 +411,20 @@ export async function exportToExcel(scheduleResult, config) {
     }
 
     // Configuration & Legend sheet
-    const configSheet = workbook.addWorksheet('Config & Legend');
+    const configSheet = workbook.addWorksheet(t.configSheet);
 
     // Configuration section
-    configSheet.addRow(['Configuration', 'Value']);
-    configSheet.addRow(['Work Days', config.workDays]);
-    configSheet.addRow(['Off Days', config.offDays]);
-    configSheet.addRow(['Induction Days', config.inductionDays]);
-    configSheet.addRow(['Drilling Days Required', config.drillingDaysRequired]);
+    configSheet.addRow([t.configuration, t.value]);
+    configSheet.addRow([pdfT.workDays || 'Work Days', config.workDays]);
+    configSheet.addRow([pdfT.offDays || 'Off Days', config.offDays]);
+    configSheet.addRow([
+      pdfT.inductionDays || 'Induction Days',
+      config.inductionDays,
+    ]);
+    configSheet.addRow([
+      pdfT.drillingDaysRequired || 'Drilling Days Required',
+      config.drillingDaysRequired,
+    ]);
     configSheet.addRow([]);
 
     // Style config header
@@ -389,9 +440,9 @@ export async function exportToExcel(scheduleResult, config) {
 
     // Legend section with colors
     const legendStartRow = 7;
-    configSheet.getCell(`A${legendStartRow}`).value = 'Legend';
-    configSheet.getCell(`B${legendStartRow}`).value = 'Meaning';
-    configSheet.getCell(`C${legendStartRow}`).value = 'Color';
+    configSheet.getCell(`A${legendStartRow}`).value = t.legend;
+    configSheet.getCell(`B${legendStartRow}`).value = t.meaning;
+    configSheet.getCell(`C${legendStartRow}`).value = t.color;
 
     const legendHeader = configSheet.getRow(legendStartRow);
     legendHeader.eachCell((cell) => {
@@ -405,20 +456,12 @@ export async function exportToExcel(scheduleResult, config) {
 
     // Legend items with actual colors
     const legendItems = [
-      { label: 'S', meaning: 'Travel Up (Subida)', color: STATE_COLORS.UP },
-      {
-        label: 'I',
-        meaning: 'Induction (Inducción)',
-        color: STATE_COLORS.INDUCTION,
-      },
-      {
-        label: 'P',
-        meaning: 'Drilling (Perforación)',
-        color: STATE_COLORS.DRILLING,
-      },
-      { label: 'B', meaning: 'Travel Down (Bajada)', color: STATE_COLORS.DOWN },
-      { label: 'D', meaning: 'Rest (Descanso)', color: STATE_COLORS.REST },
-      { label: '-', meaning: 'Empty (Vacío)', color: STATE_COLORS.EMPTY },
+      { label: 'S', meaning: states.up, color: STATE_COLORS.UP },
+      { label: 'I', meaning: states.induction, color: STATE_COLORS.INDUCTION },
+      { label: 'P', meaning: states.drilling, color: STATE_COLORS.DRILLING },
+      { label: 'B', meaning: states.down, color: STATE_COLORS.DOWN },
+      { label: 'D', meaning: states.rest, color: STATE_COLORS.REST },
+      { label: '-', meaning: states.empty, color: STATE_COLORS.EMPTY },
     ];
 
     legendItems.forEach((item, index) => {

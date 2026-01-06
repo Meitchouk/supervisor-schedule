@@ -85,6 +85,35 @@
       "pdf": "Export as PDF",
       "csv": "Export as CSV",
       "excel": "Export as Excel"
+    },
+    "pdf": {
+      "title": "Supervisor Schedule",
+      "workDays": "Work Days",
+      "offDays": "Off Days",
+      "inductionDays": "Induction Days",
+      "drillingDaysRequired": "Drilling Days Required",
+      "days": "Days",
+      "page": "Page",
+      "of": "of",
+      "continued": "(continued)",
+      "legend": "Legend",
+      "states": {
+        "up": "Travel Up",
+        "induction": "Induction",
+        "drilling": "Drilling",
+        "down": "Travel Down",
+        "rest": "Rest",
+        "empty": "Empty"
+      }
+    },
+    "excel": {
+      "scheduleSheet": "Schedule",
+      "configSheet": "Config & Legend",
+      "configuration": "Configuration",
+      "value": "Value",
+      "legend": "Legend",
+      "meaning": "Meaning",
+      "color": "Color"
     }
   },
   "history": {

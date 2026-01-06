@@ -27,22 +27,52 @@ export default function ScheduleViewer({ item, onClose }) {
   const { scheduleResult, config } = item;
   const { days, drillingCountByDay } = scheduleResult;
 
+  // Build translations object for export functions
+  const getExportTranslations = () => ({
+    title: t('export.pdf.title'),
+    workDays: t('export.pdf.workDays'),
+    offDays: t('export.pdf.offDays'),
+    inductionDays: t('export.pdf.inductionDays'),
+    drillingDaysRequired: t('export.pdf.drillingDaysRequired'),
+    days: t('export.pdf.days'),
+    page: t('export.pdf.page'),
+    of: t('export.pdf.of'),
+    continued: t('export.pdf.continued'),
+    legend: t('export.pdf.legend'),
+    states: {
+      up: t('export.pdf.states.up'),
+      induction: t('export.pdf.states.induction'),
+      drilling: t('export.pdf.states.drilling'),
+      down: t('export.pdf.states.down'),
+      rest: t('export.pdf.states.rest'),
+      empty: t('export.pdf.states.empty'),
+    },
+    // Excel specific
+    scheduleSheet: t('export.excel.scheduleSheet'),
+    configSheet: t('export.excel.configSheet'),
+    configuration: t('export.excel.configuration'),
+    value: t('export.excel.value'),
+    meaning: t('export.excel.meaning'),
+    color: t('export.excel.color'),
+  });
+
   const handleExport = async (format) => {
     if (isExporting) return;
 
     setIsExporting(true);
     try {
       let success = false;
+      const translations = getExportTranslations();
 
       switch (format) {
         case 'pdf':
-          success = exportToPDF(scheduleResult, config);
+          success = exportToPDF(scheduleResult, config, translations);
           break;
         case 'csv':
           success = exportToCSV(scheduleResult);
           break;
         case 'excel':
-          success = await exportToExcel(scheduleResult, config);
+          success = await exportToExcel(scheduleResult, config, translations);
           break;
         default:
           console.warn('Unknown export format:', format);

@@ -83,6 +83,35 @@
       "pdf": "Exportar como PDF",
       "csv": "Exportar como CSV",
       "excel": "Exportar como Excel"
+    },
+    "pdf": {
+      "title": "Cronograma de Supervisores",
+      "workDays": "Días de Trabajo",
+      "offDays": "Días Libres",
+      "inductionDays": "Días de Inducción",
+      "drillingDaysRequired": "Días de Perforación Requeridos",
+      "days": "Días",
+      "page": "Página",
+      "of": "de",
+      "continued": "(continuación)",
+      "legend": "Leyenda",
+      "states": {
+        "up": "Subida",
+        "induction": "Inducción",
+        "drilling": "Perforación",
+        "down": "Bajada",
+        "rest": "Descanso",
+        "empty": "Vacío"
+      }
+    },
+    "excel": {
+      "scheduleSheet": "Cronograma",
+      "configSheet": "Configuración y Leyenda",
+      "configuration": "Configuración",
+      "value": "Valor",
+      "legend": "Leyenda",
+      "meaning": "Significado",
+      "color": "Color"
     }
   },
   "history": {
