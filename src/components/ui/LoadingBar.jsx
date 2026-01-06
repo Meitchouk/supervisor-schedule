@@ -1,12 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLoading } from '../../context/LoadingContext';
 
-/**
- * Simple debounce utility
- * @param {Function} func - Function to debounce
- * @param {number} delay - Delay in milliseconds
- * @returns {Function} Debounced function
- */
 function debounce(func, delay) {
   let timeoutId;
   return (...args) => {
@@ -15,12 +9,6 @@ function debounce(func, delay) {
   };
 }
 
-/**
- * LoadingBar component
- * Displays an animated progress bar when loading is active
- * On mobile: sticky at top of viewport
- * On desktop: normal flow within header
- */
 export default function LoadingBar() {
   const { isLoading, isInitialLoading } = useLoading();
   const [isMobile, setIsMobile] = useState(false);
@@ -45,7 +33,6 @@ export default function LoadingBar() {
     }
 
     const handleScroll = () => {
-      // If scroll is greater than header height (~100px), make it sticky
       setIsSticky(window.scrollY > 100);
     };
 
@@ -56,9 +43,6 @@ export default function LoadingBar() {
 
   const showLoading = isLoading || isInitialLoading;
 
-  // Mobile: fixed top-0 when scrolling, normal when at top
-  // Desktop: normal flow in header
-  // With loading: purple animation, Without loading: static primary bar
   const containerClasses = `w-full ${
     isMobile && isSticky ? 'fixed top-0 left-0 right-0 z-50 bg-base-100' : ''
   }`;

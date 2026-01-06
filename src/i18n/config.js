@@ -4,9 +4,6 @@ import { initReactI18next } from 'react-i18next';
 import enTranslations from './locales/en.json';
 import esTranslations from './locales/es.json';
 
-/**
- * Get language from localStorage safely
- */
 function getSavedLanguage() {
   try {
     return localStorage.getItem('language') || 'en';

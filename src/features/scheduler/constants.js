@@ -2,9 +2,6 @@
  * Schedule state constants and mappings.
  */
 
-/**
- * Schedule state types.
- */
 const STATE = {
   UP: 'UP',
   INDUCTION: 'INDUCTION',
@@ -14,9 +11,6 @@ const STATE = {
   EMPTY: 'EMPTY',
 };
 
-/**
- * Map state to short label displayed in the schedule.
- */
 const STATE_TO_LABEL = {
   [STATE.UP]: 'S',
   [STATE.INDUCTION]: 'I',
@@ -26,9 +20,6 @@ const STATE_TO_LABEL = {
   [STATE.EMPTY]: '-',
 };
 
-/**
- * Map state to CSS class for styling.
- */
 const STATE_TO_COLOR_CLASS = {
   [STATE.UP]: 'state-up',
   [STATE.INDUCTION]: 'state-induction',
@@ -38,9 +29,6 @@ const STATE_TO_COLOR_CLASS = {
   [STATE.EMPTY]: 'state-empty',
 };
 
-/**
- * Map state to daisyUI badge class for styling.
- */
 const STATE_TO_BADGE_CLASS = {
   [STATE.UP]: 'badge-info', // Blue - Travel Up
   [STATE.INDUCTION]: 'badge-warning', // Yellow - Induction
@@ -50,11 +38,6 @@ const STATE_TO_BADGE_CLASS = {
   [STATE.EMPTY]: 'badge-outline', // White - Empty
 };
 
-/**
- * Get badge class for a state.
- * @param {string} state
- * @returns {string}
- */
 export function getStateBadgeClass(state) {
   return STATE_TO_BADGE_CLASS[state] || 'badge-neutral';
 }

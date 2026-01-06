@@ -5,11 +5,6 @@ import { z } from 'zod';
 import { InfoTooltip } from '../../components/ui';
 import { useLoading } from '../../context/LoadingContext';
 
-/**
- * ScheduleConfigForm component.
- * Form for configuring schedule generation parameters using daisyUI.
- * Disables all inputs during loading.
- */
 export default function ScheduleConfigForm({
   config,
   onConfigChange,
@@ -18,7 +13,6 @@ export default function ScheduleConfigForm({
   const { t } = useTranslation();
   const { isLoading } = useLoading();
 
-  // Zod validation schema
   const schema = z.object({
     workDays: z
       .number({
@@ -66,7 +60,6 @@ export default function ScheduleConfigForm({
   });
 
   const handleInputChange = (field, value) => {
-    // Allow empty string for manual editing
     if (value === '') {
       setValue(field, undefined, { shouldValidate: false });
       onConfigChange(field, '');
@@ -92,7 +85,6 @@ export default function ScheduleConfigForm({
       <div className="card-body flex flex-col gap-4">
         <h2 className="card-title font-bold">{t('config.title')}</h2>
 
-        {/* MARK: Work Days */}
         <fieldset className="fieldset w-full">
           <legend className="fieldset-legend">
             <InfoTooltip tooltipKey="config.workDaysTooltip">
@@ -121,7 +113,6 @@ export default function ScheduleConfigForm({
           )}
         </fieldset>
 
-        {/* MARK: Off Days */}
         <fieldset className="fieldset w-full">
           <legend className="fieldset-legend">
             <InfoTooltip tooltipKey="config.offDaysTooltip">
@@ -150,7 +141,6 @@ export default function ScheduleConfigForm({
           )}
         </fieldset>
 
-        {/* MARK: Induction Days */}
         <fieldset className="fieldset w-full">
           <legend className="fieldset-legend">
             <InfoTooltip tooltipKey="config.inductionDaysTooltip">
@@ -179,7 +169,6 @@ export default function ScheduleConfigForm({
           )}
         </fieldset>
 
-        {/* MARK: Drilling Days Required */}
         <fieldset className="fieldset w-full">
           <legend className="fieldset-legend">
             <InfoTooltip tooltipKey="config.drillingDaysRequiredTooltip">
@@ -210,7 +199,6 @@ export default function ScheduleConfigForm({
           )}
         </fieldset>
 
-        {/* MARK: Generate Schedule Button */}
         <div className="card-actions align-middle mt-auto flex justify-center">
           <button
             type="submit"

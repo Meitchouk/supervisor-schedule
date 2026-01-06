@@ -1,21 +1,10 @@
 import { Info } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-/**
- * InfoTooltip component.
- * Displays an info icon with a tooltip for contextual help.
- * Uses i18n for tooltip text.
- *
- * @param {string} tooltipKey - i18n key for the tooltip text
- * @param {ReactNode} children - Content to display before the info icon
- * @param {string} position - Tooltip position: 'left', 'top', 'bottom', or 'right' (default)
- * @param {boolean} icon - Whether to display the info icon (default: true)
- */
 export default function InfoTooltip({ tooltipKey, children, position = 'right', icon = true }) {
   const { t } = useTranslation();
   const tooltipText = t(tooltipKey);
   
-  // Validate position prop
   const validPositions = ['left', 'top', 'bottom', 'right'];
   const safePosition = validPositions.includes(position) ? position : 'right';
   
