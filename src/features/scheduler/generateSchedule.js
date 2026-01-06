@@ -6,6 +6,26 @@ function clampInt(value, min, max) {
   return Math.min(max, Math.max(min, Math.trunc(n)));
 }
 
+function canPartitionWorkWindow(workDays, offDays) {
+  // Can we write workDays as a sum of integers in [3..offDays]?
+  // Greedy with small remainder fix; if it fails, return false.
+  let remaining = workDays;
+
+  while (remaining > 0) {
+    let len = Math.min(offDays, remaining);
+
+    const rem = remaining - len;
+    if (rem === 1) len -= 2; // leave 3
+    if (rem === 2) len -= 1; // leave 3
+
+    if (len < 3) return false;
+
+    remaining -= len;
+  }
+
+  return true;
+}
+
 function assertConfig({ workDays, offDays, inductionDays }) {
   if (inductionDays < 1 || inductionDays > 5) {
     throw new Error('inductionDays must be between 1 and 5.');
@@ -13,11 +33,14 @@ function assertConfig({ workDays, offDays, inductionDays }) {
   if (offDays < 3) {
     throw new Error('offDays must be >= 3 (DOWN + at least 1 REST + UP).');
   }
+  if (workDays < 3) {
+    throw new Error('workDays must be >= 3 for a feasible rotation.');
+  }
   if (workDays - inductionDays < 2) {
     throw new Error('workDays - inductionDays must be >= 2 to avoid 1-day drilling blocks.');
   }
-  if (workDays < offDays) {
-    throw new Error('workDays must be >= offDays for this rotation strategy to be feasible.');
+  if (!canPartitionWorkWindow(workDays, offDays)) {
+    throw new Error('Invalid configuration: cannot partition workDays into valid OFFSITE blocks.');
   }
 }
 
@@ -60,13 +83,38 @@ function buildS1Schedule({ totalDays, workDays, offDays, inductionDays }) {
 }
 
 /**
- * S1 drilling windows (cycles >= 1): [cycleStart+1 .. cycleStart+workDays] inclusive.
- * We schedule OFFSITE blocks (length=offDays) for S2/S3 fully inside these windows.
+ * Partition `workDays` into an array of integers in [3..offDays] summing to workDays.
+ * Greedy with small remainder handling.
  */
-function computeRotationDownDays({ totalDays, workDays, offDays }) {
+function partitionWorkWindow(workDays, offDays) {
+  const blocks = [];
+  let remaining = workDays;
+
+  while (remaining > 0) {
+    let len = Math.min(offDays, remaining);
+
+    const rem = remaining - len;
+    if (rem === 1) len -= 2;
+    if (rem === 2) len -= 1;
+
+    if (len < 3) throw new Error(`Cannot partition workDays=${workDays}, offDays=${offDays}`);
+
+    blocks.push(len);
+    remaining -= len;
+  }
+
+  return blocks;
+}
+
+/**
+ * S1 drilling windows (cycles >= 1): [cycleStart+1 .. cycleStart+workDays] inclusive.
+ * We partition each window into blocks of length [3..offDays] and assign them alternating to S2/S3.
+ * Returns arrays of {startDay, offsiteLength} for each supervisor.
+ */
+function computeRotationOffsiteBlocks({ totalDays, workDays, offDays }) {
   const cycleDays = workDays + offDays;
-  const s2DownDays = [];
-  const s3DownDays = [];
+  const s2Blocks = [];
+  const s3Blocks = [];
 
   let nextDownSupervisor = 'S2';
 
@@ -76,20 +124,24 @@ function computeRotationDownDays({ totalDays, workDays, offDays }) {
 
     if (windowStart >= totalDays) break;
 
-    // OFFSITE block length is offDays, must fit within [windowStart..windowEnd]
-    const lastValidStart = Math.min(windowEnd - offDays + 1, totalDays - 1);
-    if (lastValidStart < windowStart) continue;
+    const windowLength = windowEnd - windowStart + 1;
+    const blockLengths = partitionWorkWindow(windowLength, offDays);
 
-    // Put at most one OFFSITE block per window start step = offDays
-    for (let d = windowStart; d <= lastValidStart; d += offDays) {
-      if (nextDownSupervisor === 'S2') s2DownDays.push(d);
-      else s3DownDays.push(d);
+    let currentDay = windowStart;
+    for (const offsiteLength of blockLengths) {
+      if (currentDay >= totalDays) break;
+
+      const block = { startDay: currentDay, offsiteLength };
+
+      if (nextDownSupervisor === 'S2') s2Blocks.push(block);
+      else s3Blocks.push(block);
 
       nextDownSupervisor = nextDownSupervisor === 'S2' ? 'S3' : 'S2';
+      currentDay += offsiteLength;
     }
   }
 
-  return { s2DownDays, s3DownDays };
+  return { s2Blocks, s3Blocks };
 }
 
 function fillFlexibleSupervisor({
@@ -97,16 +149,13 @@ function fillFlexibleSupervisor({
   totalDays,
   entryDay,
   inductionDays,
-  offDays,
-  downDays,
+  offsiteBlocks,
 }) {
-  const restDays = offDays - 2;
-
   let day = entryDay;
-  let downIndex = 0;
+  let blockIndex = 0;
 
-  const nextDownDay = () =>
-    downIndex < downDays.length ? downDays[downIndex] : Number.POSITIVE_INFINITY;
+  const nextBlock = () =>
+    blockIndex < offsiteBlocks.length ? offsiteBlocks[blockIndex] : null;
 
   if (day < totalDays) schedule[day++] = STATE.UP;
 
@@ -116,17 +165,19 @@ function fillFlexibleSupervisor({
   }
 
   while (day < totalDays) {
-    const nd = nextDownDay();
-    const stopAt = Math.min(nd, totalDays);
+    const block = nextBlock();
+    const stopAt = block ? Math.min(block.startDay, totalDays) : totalDays;
 
     while (day < stopAt) {
       schedule[day++] = STATE.DRILLING;
     }
 
-    if (day >= totalDays || nd === Number.POSITIVE_INFINITY) break;
+    if (day >= totalDays || !block) break;
+
+    const { offsiteLength } = block;
+    const restDays = offsiteLength - 2;
 
     schedule[day++] = STATE.DOWN;
-    downIndex++;
 
     for (let i = 0; i < restDays && day < totalDays; i++) {
       schedule[day++] = STATE.REST;
@@ -135,6 +186,7 @@ function fillFlexibleSupervisor({
     if (day >= totalDays) break;
 
     schedule[day++] = STATE.UP;
+    blockIndex++;
   }
 }
 
@@ -167,13 +219,13 @@ export function generateSchedule(config) {
 
   console.log('[GENERATE] Timing:', { s1FirstDownDay, s3EntryDay });
 
-  const { s2DownDays, s3DownDays } = computeRotationDownDays({
+  const { s2Blocks, s3Blocks } = computeRotationOffsiteBlocks({
     totalDays,
     workDays,
     offDays,
   });
 
-  console.log('[GENERATE] Down days calculated:', { s2DownDays, s3DownDays });
+  console.log('[GENERATE] Offsite blocks calculated:', { s2Blocks, s3Blocks });
 
   // S2 enters from day 0
   fillFlexibleSupervisor({
@@ -181,8 +233,7 @@ export function generateSchedule(config) {
     totalDays,
     entryDay: 0,
     inductionDays,
-    offDays,
-    downDays: s2DownDays,
+    offsiteBlocks: s2Blocks,
   });
 
   // S3 enters later
@@ -191,8 +242,7 @@ export function generateSchedule(config) {
     totalDays,
     entryDay: s3EntryDay,
     inductionDays,
-    offDays,
-    downDays: s3DownDays,
+    offsiteBlocks: s3Blocks,
   });
 
   const days = [];
