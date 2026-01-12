@@ -44,7 +44,7 @@
     "autoprefixer": "^10.4.23",
     "daisyui": "^5.5.14",
     "eslint": "^8.55.0",
-    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react": "^7.33.0",
     "eslint-plugin-react-hooks": "^4.6.0",
