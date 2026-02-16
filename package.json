@@ -24,17 +24,17 @@
     "exceljs": "^4.4.0",
     "file-saver": "^2.0.5",
     "i18next": "^23.7.0",
-    "jspdf": "^4.0.0",
+    "jspdf": "^4.1.0",
     "jspdf-autotable": "^5.0.7",
-    "lucide-react": "^0.562.0",
+    "lucide-react": "^0.564.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.70.0",
+    "react-hook-form": "^7.71.1",
     "react-hot-toast": "^2.6.0",
     "react-i18next": "^13.5.0",
-    "recharts": "^3.6.0",
-    "tailwind-merge": "^3.4.0",
-    "zod": "^4.3.5"
+    "recharts": "^3.7.0",
+    "tailwind-merge": "^3.4.1",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",
